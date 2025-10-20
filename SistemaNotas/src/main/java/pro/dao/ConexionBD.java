@@ -13,20 +13,24 @@ import java.sql.SQLException;
  * @author USER
  */
 public class ConexionBD {
-    private static final String URL = "jdbc:postgresql://svr-prog2.postgres.database.azure.com/dinamita";
-    private static final String USER = "usr_root_db";
-    private static final String PASSWORD = "UMG_$2025Pro2";
     
-    public static Connection getConexion() throws SQLException 
-    {
-        try {
-            Class.forName("org.postgresql.Driver");
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException e) {
-            System.err.println("Error: No se encontró el driver de PostgreSQL");
-            e.printStackTrace();
-            return null;
-        }
+    public static void main(String[] args) {
+        
     }
-    
+     private static final String URL = "jdbc:postgresql://svr-prog2.postgres.database.azure.com/dinamita";
+        private static final String USER = "usr_root_db";
+        private static final String PASSWORD = "UMG_$2025Pro2";
+
+        public static Connection getConexion() throws SQLException 
+        {
+            try {
+                Class.forName("org.postgresql.Driver");
+                return DriverManager.getConnection(URL, USER, PASSWORD);
+            } catch (ClassNotFoundException e)
+            {
+                System.err.println("Error: No se encontró el driver de PostgreSQL");
+                e.printStackTrace();
+                return null;
+            }
+        }
 }
