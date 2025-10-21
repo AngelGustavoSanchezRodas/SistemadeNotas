@@ -4,6 +4,10 @@
  */
 package pro.vista;
 
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JFrame;
+
 /**
  *
  * @author USER
@@ -16,6 +20,14 @@ public class FormularioLogin extends javax.swing.JFrame {
     public FormularioLogin() {
         initComponents();
     }
+    
+    private void configurarVentana() {
+        setSize(900, 600);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.WHITE); // fondo uniforme
+        setFont(new Font("Segoe UI", Font.PLAIN, 14));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,36 +39,36 @@ public class FormularioLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txtregresar = new javax.swing.JButton();
+        jbRegresar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtCorre = new javax.swing.JLabel();
         txtcorreo = new javax.swing.JTextField();
         txtcontra = new javax.swing.JLabel();
         txtContraseña = new javax.swing.JPasswordField();
-        txtenviar = new javax.swing.JButton();
+        jbEnviar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(51, 51, 255));
+        jPanel1.setBackground(new java.awt.Color(13, 71, 161));
 
-        txtregresar.setBackground(new java.awt.Color(255, 153, 255));
-        txtregresar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtregresar.setForeground(new java.awt.Color(0, 0, 0));
-        txtregresar.setText("Regresar");
-        txtregresar.addActionListener(new java.awt.event.ActionListener() {
+        jbRegresar.setBackground(new java.awt.Color(177, 134, 156));
+        jbRegresar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jbRegresar.setForeground(new java.awt.Color(0, 0, 0));
+        jbRegresar.setText("Regresar");
+        jbRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtregresarActionPerformed(evt);
+                jbRegresarActionPerformed(evt);
             }
         });
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel2.setText("LOGIN");
 
-        txtCorre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtCorre.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtCorre.setText("CORREO");
 
-        txtcontra.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtcontra.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtcontra.setText("CONTRASEÑA");
 
         txtContraseña.addActionListener(new java.awt.event.ActionListener() {
@@ -65,51 +77,48 @@ public class FormularioLogin extends javax.swing.JFrame {
             }
         });
 
-        txtenviar.setBackground(new java.awt.Color(255, 153, 255));
-        txtenviar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtenviar.setForeground(new java.awt.Color(0, 0, 0));
-        txtenviar.setText("ENVIAR");
+        jbEnviar.setBackground(new java.awt.Color(197, 134, 156));
+        jbEnviar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jbEnviar.setForeground(new java.awt.Color(0, 0, 0));
+        jbEnviar.setText("ENVIAR");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtregresar)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(57, 57, 57)
-                                .addComponent(txtCorre))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2)))))
-                .addContainerGap(30, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(19, 19, 19)
+                .addComponent(jbRegresar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(138, 138, 138))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(231, 231, 231)
+                .addComponent(txtCorre)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(txtcontra)
-                        .addGap(138, 138, 138))
+                        .addGap(159, 159, 159))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtenviar)
-                        .addGap(152, 152, 152))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(100, 100, 100))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jbEnviar)
+                        .addGap(162, 162, 162))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtregresar)
+                .addGap(35, 35, 35)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jbRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
+                .addGap(18, 18, 18)
                 .addComponent(txtCorre)
                 .addGap(18, 18, 18)
                 .addComponent(txtcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -117,9 +126,9 @@ public class FormularioLogin extends javax.swing.JFrame {
                 .addComponent(txtcontra)
                 .addGap(18, 18, 18)
                 .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(txtenviar)
-                .addGap(25, 25, 25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(jbEnviar)
+                .addGap(42, 42, 42))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -140,9 +149,9 @@ public class FormularioLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtContraseñaActionPerformed
 
-    private void txtregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtregresarActionPerformed
+    private void jbRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegresarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtregresarActionPerformed
+    }//GEN-LAST:event_jbRegresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,11 +192,11 @@ public class FormularioLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jbEnviar;
+    private javax.swing.JButton jbRegresar;
     private javax.swing.JPasswordField txtContraseña;
     private javax.swing.JLabel txtCorre;
     private javax.swing.JLabel txtcontra;
     private javax.swing.JTextField txtcorreo;
-    private javax.swing.JButton txtenviar;
-    private javax.swing.JButton txtregresar;
     // End of variables declaration//GEN-END:variables
 }

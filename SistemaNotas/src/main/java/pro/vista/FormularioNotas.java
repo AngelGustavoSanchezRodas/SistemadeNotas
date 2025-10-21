@@ -4,6 +4,10 @@
  */
 package pro.vista;
 
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JFrame;
+
 /**
  *
  * @author USER
@@ -16,6 +20,14 @@ public class FormularioNotas extends javax.swing.JFrame {
     public FormularioNotas() {
         initComponents();
     }
+    
+     private void configurarVentana() {
+        setSize(900, 900);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.WHITE); // fondo uniforme
+        setFont(new Font("Segoe UI", Font.PLAIN, 14));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,236 +38,210 @@ public class FormularioNotas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        txtregresar = new javax.swing.JButton();
+        jpFormularioNotas1 = new javax.swing.JPanel();
+        jbRegresar = new javax.swing.JButton();
+        jbEnviar = new javax.swing.JButton();
+        jpNota1 = new javax.swing.JPanel();
+        jcNA1 = new javax.swing.JCheckBox();
+        jbExamen1 = new javax.swing.JLabel();
+        jtfExamen1 = new javax.swing.JTextField();
+        jpNota2 = new javax.swing.JPanel();
+        jcNA2 = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
-        txtexamen1 = new javax.swing.JLabel();
-        txtexamen2 = new javax.swing.JLabel();
-        txtexamenfinal = new javax.swing.JLabel();
-        txtenviar = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jPanel4 = new javax.swing.JPanel();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        jtfExamen2 = new javax.swing.JTextField();
+        jpNotaFinal = new javax.swing.JPanel();
+        jcNA3 = new javax.swing.JCheckBox();
+        jlExamenFinal = new javax.swing.JLabel();
+        jtfExamenFinal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(51, 51, 255));
+        jpFormularioNotas1.setBackground(new java.awt.Color(13, 71, 161));
+        jpFormularioNotas1.setEnabled(false);
 
-        txtregresar.setBackground(new java.awt.Color(255, 102, 255));
-        txtregresar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtregresar.setForeground(new java.awt.Color(255, 0, 51));
-        txtregresar.setText("Regresar");
+        jbRegresar.setBackground(new java.awt.Color(197, 134, 156));
+        jbRegresar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jbRegresar.setForeground(new java.awt.Color(0, 0, 0));
+        jbRegresar.setText("Regresar");
+        jbRegresar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Vista Profesor");
+        jbEnviar.setBackground(new java.awt.Color(197, 134, 156));
+        jbEnviar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jbEnviar.setForeground(new java.awt.Color(0, 0, 0));
+        jbEnviar.setText("Enviar");
 
-        txtexamen1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtexamen1.setText("Examen 1");
+        jpNota1.setBackground(new java.awt.Color(197, 134, 156));
+        jpNota1.setPreferredSize(new java.awt.Dimension(250, 60));
 
-        txtexamen2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtexamen2.setText("Examen 2");
-
-        txtexamenfinal.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtexamenfinal.setText("Examen Final");
-
-        txtenviar.setBackground(new java.awt.Color(255, 102, 255));
-        txtenviar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtenviar.setForeground(new java.awt.Color(255, 0, 0));
-        txtenviar.setText("Enviar");
-
-        jPanel2.setBackground(new java.awt.Color(255, 102, 255));
-
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField1.setText("Nota 1");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jcNA1.setText("N.A.");
+        jcNA1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jcNA1ActionPerformed(evt);
             }
         });
 
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField2.setText("N.A.");
+        jbExamen1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jbExamen1.setText("Examen 1");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jPanel3.setBackground(new java.awt.Color(255, 102, 255));
-
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField3.setText("Nota 1");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        jtfExamen1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jtfExamen1.setText("Nota ");
+        jtfExamen1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                jtfExamen1ActionPerformed(evt);
             }
         });
 
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField4.setText("N.A.");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jPanel4.setBackground(new java.awt.Color(255, 102, 255));
-
-        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField5.setText("Nota 1");
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
-
-        jTextField6.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField6.setText("N.A.");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(txtexamenfinal))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtregresar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtexamen1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(txtexamen2)
-                                    .addGap(47, 47, 47)
-                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(txtenviar)
-                                    .addGap(112, 112, 112))))))
+        javax.swing.GroupLayout jpNota1Layout = new javax.swing.GroupLayout(jpNota1);
+        jpNota1.setLayout(jpNota1Layout);
+        jpNota1Layout.setHorizontalGroup(
+            jpNota1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpNota1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jbExamen1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(jtfExamen1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(jcNA1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jpNota1Layout.setVerticalGroup(
+            jpNota1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpNota1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtregresar)
-                        .addGap(32, 32, 32)
-                        .addComponent(txtexamen1))
+                .addGroup(jpNota1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcNA1, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(jbExamen1)
+                    .addComponent(jtfExamen1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jpNota2.setBackground(new java.awt.Color(197, 134, 156));
+        jpNota2.setPreferredSize(new java.awt.Dimension(250, 60));
+
+        jcNA2.setText("N.A");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Examen 2");
+
+        jtfExamen2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jtfExamen2.setText("Nota");
+
+        javax.swing.GroupLayout jpNota2Layout = new javax.swing.GroupLayout(jpNota2);
+        jpNota2.setLayout(jpNota2Layout);
+        jpNota2Layout.setHorizontalGroup(
+            jpNota2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpNota2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jtfExamen2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(jcNA2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jpNota2Layout.setVerticalGroup(
+            jpNota2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpNota2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpNota2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcNA2, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                     .addComponent(jLabel1)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtexamen2)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtexamenfinal)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfExamen2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jpNotaFinal.setBackground(new java.awt.Color(197, 134, 156));
+        jpNotaFinal.setPreferredSize(new java.awt.Dimension(250, 60));
+
+        jcNA3.setText("N.A");
+
+        jlExamenFinal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jlExamenFinal.setText("Examen Final");
+
+        jtfExamenFinal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jtfExamenFinal.setText("Nota");
+
+        javax.swing.GroupLayout jpNotaFinalLayout = new javax.swing.GroupLayout(jpNotaFinal);
+        jpNotaFinal.setLayout(jpNotaFinalLayout);
+        jpNotaFinalLayout.setHorizontalGroup(
+            jpNotaFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpNotaFinalLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jlExamenFinal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
+                .addComponent(jtfExamenFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(jcNA3)
+                .addGap(16, 16, 16))
+        );
+        jpNotaFinalLayout.setVerticalGroup(
+            jpNotaFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpNotaFinalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpNotaFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcNA3, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(jlExamenFinal)
+                    .addComponent(jtfExamenFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jpFormularioNotas1Layout = new javax.swing.GroupLayout(jpFormularioNotas1);
+        jpFormularioNotas1.setLayout(jpFormularioNotas1Layout);
+        jpFormularioNotas1Layout.setHorizontalGroup(
+            jpFormularioNotas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpFormularioNotas1Layout.createSequentialGroup()
+                .addGroup(jpFormularioNotas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpFormularioNotas1Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jbRegresar))
+                    .addGroup(jpFormularioNotas1Layout.createSequentialGroup()
+                        .addGap(105, 105, 105)
+                        .addGroup(jpFormularioNotas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jpNota2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                            .addComponent(jpNota1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                            .addComponent(jpNotaFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)))
+                    .addGroup(jpFormularioNotas1Layout.createSequentialGroup()
+                        .addGap(295, 295, 295)
+                        .addComponent(jbEnviar)))
+                .addContainerGap(193, Short.MAX_VALUE))
+        );
+        jpFormularioNotas1Layout.setVerticalGroup(
+            jpFormularioNotas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpFormularioNotas1Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jbRegresar)
+                .addGap(63, 63, 63)
+                .addComponent(jpNota1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(txtenviar)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addComponent(jpNota2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(jpNotaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64)
+                .addComponent(jbEnviar)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpFormularioNotas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpFormularioNotas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jcNA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcNA1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jcNA1ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jtfExamen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfExamen1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_jtfExamen1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -295,20 +281,19 @@ public class FormularioNotas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JButton txtenviar;
-    private javax.swing.JLabel txtexamen1;
-    private javax.swing.JLabel txtexamen2;
-    private javax.swing.JLabel txtexamenfinal;
-    private javax.swing.JButton txtregresar;
+    private javax.swing.JButton jbEnviar;
+    private javax.swing.JLabel jbExamen1;
+    private javax.swing.JButton jbRegresar;
+    private javax.swing.JCheckBox jcNA1;
+    private javax.swing.JCheckBox jcNA2;
+    private javax.swing.JCheckBox jcNA3;
+    private javax.swing.JLabel jlExamenFinal;
+    private javax.swing.JPanel jpFormularioNotas1;
+    private javax.swing.JPanel jpNota1;
+    private javax.swing.JPanel jpNota2;
+    private javax.swing.JPanel jpNotaFinal;
+    private javax.swing.JTextField jtfExamen1;
+    private javax.swing.JTextField jtfExamen2;
+    private javax.swing.JTextField jtfExamenFinal;
     // End of variables declaration//GEN-END:variables
 }

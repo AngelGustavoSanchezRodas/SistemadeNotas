@@ -4,6 +4,10 @@
  */
 package pro.vista;
 
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JFrame;
+
 /**
  *
  * @author USER
@@ -15,6 +19,14 @@ public class VistaInicial extends javax.swing.JFrame {
      */
     public VistaInicial() {
         initComponents();
+    }
+    
+    private void configurarVentana() {
+        setSize(900, 600);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.WHITE); // fondo uniforme
+        setFont(new Font("Segoe UI", Font.PLAIN, 14));
     }
 
     /**
@@ -29,11 +41,11 @@ public class VistaInicial extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        txtProfesor = new javax.swing.JTextField();
-        txtEstudiante = new javax.swing.JTextField();
-        txtlogin = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        txtBienvenido = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jbProfesor = new javax.swing.JButton();
+        jbEstudiante = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -59,63 +71,68 @@ public class VistaInicial extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel3.setBackground(new java.awt.Color(0, 51, 255));
+        jPanel3.setBackground(new java.awt.Color(13, 71, 161));
 
-        txtProfesor.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        txtProfesor.setText("Profesor");
-        txtProfesor.addActionListener(new java.awt.event.ActionListener() {
+        txtBienvenido.setEditable(false);
+        txtBienvenido.setBackground(new java.awt.Color(13, 71, 161));
+        txtBienvenido.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txtBienvenido.setForeground(new java.awt.Color(13, 71, 161));
+        txtBienvenido.setText("Bienvenido");
+        txtBienvenido.setEnabled(false);
+        txtBienvenido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtProfesorActionPerformed(evt);
+                txtBienvenidoActionPerformed(evt);
             }
         });
 
-        txtEstudiante.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        txtEstudiante.setText("Estudiante");
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Estudiante.png"))); // NOI18N
 
-        txtlogin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        txtlogin.setText("LOGIN");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Profesor.png"))); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/usuario.png"))); // NOI18N
-        jLabel3.setText("jLabel3");
+        jbProfesor.setForeground(new java.awt.Color(197, 134, 156));
+        jbProfesor.setText("Profesor");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/usuario.png"))); // NOI18N
-        jLabel4.setText("jLabel3");
+        jbEstudiante.setForeground(new java.awt.Color(197, 134, 156));
+        jbEstudiante.setText("Estudiante");
+        jbEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEstudianteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(157, 157, 157)
-                .addComponent(txtlogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbProfesor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(77, 77, 77))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(txtProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30))
+                .addGap(147, 147, 147)
+                .addComponent(txtBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtlogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                .addGap(38, 38, 38)
+                .addComponent(txtBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jbProfesor, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                    .addComponent(jbEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(111, 111, 111))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -132,9 +149,13 @@ public class VistaInicial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProfesorActionPerformed
+    private void txtBienvenidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBienvenidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtProfesorActionPerformed
+    }//GEN-LAST:event_txtBienvenidoActionPerformed
+
+    private void jbEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEstudianteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbEstudianteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,13 +194,13 @@ public class VistaInicial extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField txtEstudiante;
-    private javax.swing.JTextField txtProfesor;
-    private javax.swing.JTextField txtlogin;
+    private javax.swing.JButton jbEstudiante;
+    private javax.swing.JButton jbProfesor;
+    private javax.swing.JTextField txtBienvenido;
     // End of variables declaration//GEN-END:variables
 }

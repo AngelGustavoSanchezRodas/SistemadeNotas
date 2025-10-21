@@ -4,6 +4,10 @@
  */
 package pro.vista;
 
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JFrame;
+
 /**
  *
  * @author USER
@@ -16,6 +20,14 @@ public class VistaLogOut extends javax.swing.JFrame {
     public VistaLogOut() {
         initComponents();
     }
+    
+     private void configurarVentana() {
+        setSize(900, 900);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.WHITE); // fondo uniforme
+        setFont(new Font("Segoe UI", Font.PLAIN, 14));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,53 +39,54 @@ public class VistaLogOut extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txtcerrar = new javax.swing.JLabel();
-        txtsi = new javax.swing.JButton();
-        txtno = new javax.swing.JButton();
+        txtAviso = new javax.swing.JLabel();
+        txtSi = new javax.swing.JButton();
+        txtNo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 255));
 
-        txtcerrar.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        txtcerrar.setForeground(new java.awt.Color(0, 0, 0));
-        txtcerrar.setText("DESEA CERRAR SESIÓN?");
+        txtAviso.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        txtAviso.setForeground(new java.awt.Color(0, 0, 0));
+        txtAviso.setText("¿Desea Cerrar Sesion?");
 
-        txtsi.setBackground(new java.awt.Color(255, 102, 255));
-        txtsi.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        txtsi.setForeground(new java.awt.Color(0, 0, 0));
-        txtsi.setText("SI");
+        txtSi.setBackground(new java.awt.Color(197, 134, 156));
+        txtSi.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txtSi.setForeground(new java.awt.Color(0, 0, 0));
+        txtSi.setText("SI");
 
-        txtno.setBackground(new java.awt.Color(255, 102, 255));
-        txtno.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        txtno.setForeground(new java.awt.Color(0, 0, 0));
-        txtno.setText("NO");
+        txtNo.setBackground(new java.awt.Color(197, 134, 156));
+        txtNo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txtNo.setForeground(new java.awt.Color(0, 0, 0));
+        txtNo.setText("NO");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtcerrar)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(txtsi)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtno)
-                .addGap(55, 55, 55))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(txtSi, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(txtNo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(txtAviso)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(txtcerrar)
-                .addGap(52, 52, 52)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtsi)
-                    .addComponent(txtno))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addGap(71, 71, 71)
+                .addComponent(txtAviso)
+                .addGap(51, 51, 51)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNo, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                    .addComponent(txtSi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -127,8 +140,8 @@ public class VistaLogOut extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel txtcerrar;
-    private javax.swing.JButton txtno;
-    private javax.swing.JButton txtsi;
+    private javax.swing.JLabel txtAviso;
+    private javax.swing.JButton txtNo;
+    private javax.swing.JButton txtSi;
     // End of variables declaration//GEN-END:variables
 }
