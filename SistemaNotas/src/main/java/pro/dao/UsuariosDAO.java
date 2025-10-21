@@ -4,7 +4,7 @@
  */
 package pro.dao;
 
-import pro.entities.Catedraticos;
+import pro.entities.Usuarios;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -16,21 +16,21 @@ import java.util.List;
  *
  * @author USER
  */
-public class CatedraticoDAO {
+public class UsuariosDAO {
     
     private EntityManagerFactory emf;
     
-    public CatedraticoDAO() {
+    public UsuariosDAO() {
         emf = Persistence.createEntityManagerFactory("ProPro");
     }
     
-    public void crear(Catedraticos catedratico) {
+    public void crear(Usuarios usuario) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         
         try {
             tx.begin();
-            em.persist(catedratico);
+            em.persist(usuario);
             tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) {
@@ -42,61 +42,90 @@ public class CatedraticoDAO {
         }
     }
     
-    public Catedraticos buscarPorId(Integer id) {
+    public Usuarios buscarPorId(Integer id) {
         EntityManager em = emf.createEntityManager();
         
         try {
-            return em.find(Catedraticos.class, id);
+            return em.find(Usuarios.class, id);
         } finally {
             em.close();
         }
     }
     
-    public List<Catedraticos> listarTodos() {
+    public List<Usuarios> listarTodos() {
         EntityManager em = emf.createEntityManager();
         
         try {
-            TypedQuery<Catedraticos> query = em.createQuery("SELECT c FROM Catedraticos c", Catedraticos.class);
+            TypedQuery<Usuarios> query = em.createQuery("SELECT u FROM Usuarios u", Usuarios.class);
             return query.getResultList();
         } finally {
             em.close();
         }
     }
     
-    public List<Catedraticos> buscarPorEspecialidad(String especialidad) {
+    public Usuarios buscarPorCorreo(String correo) {
         EntityManager em = emf.createEntityManager();
         
         try {
-            TypedQuery<Catedraticos> query = em.createQuery(
-                "SELECT c FROM Catedraticos c WHERE c.especialidad = :especialidad", Catedraticos.class);
-            query.setParameter("especialidad", especialidad);
-            return query.getResultList();
-        } finally {
-            em.close();
-        }
-    }
-    
-    public Catedraticos buscarPorUsuario(Integer idUsuario) {
-        EntityManager em = emf.createEntityManager();
-        
-        try {
-            TypedQuery<Catedraticos> query = em.createQuery(
-                "SELECT c FROM Catedraticos c WHERE c.idUsuario.idUsuario = :idUsuario", Catedraticos.class);
-            query.setParameter("idUsuario", idUsuario);
-            List<Catedraticos> resultados = query.getResultList();
+            TypedQuery<Usuarios> query = em.createQuery(
+                "SELECT u FROM Usuarios u WHERE u.correo = :correo", Usuarios.class);
+            query.setParameter("correo", correo);
+            List<Usuarios> resultados = query.getResultList();
             return resultados.isEmpty() ? null : resultados.get(0);
         } finally {
             em.close();
         }
     }
     
-    public void actualizar(Catedraticos catedratico) {
+    public Usuarios buscarPorNombreUsuario(String nombreUsuario) {
+        EntityManager em = emf.createEntityManager();
+        
+        try {
+            TypedQuery<Usuarios> query = em.createQuery(
+                "SELECT u FROM Usuarios u WHERE u.nombreUsuario = :nombreUsuario", Usuarios.class);
+            query.setParameter("nombreUsuario", nombreUsuario);
+            List<Usuarios> resultados = query.getResultList();
+            return resultados.isEmpty() ? null : resultados.get(0);
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<Usuarios> buscarPorRol(String rol) {
+        EntityManager em = emf.createEntityManager();
+        
+        try {
+            TypedQuery<Usuarios> query = em.createQuery(
+                "SELECT u FROM Usuarios u WHERE u.rol = :rol", Usuarios.class);
+            query.setParameter("rol", rol);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public Usuarios autenticar(String correo, String contrasena) {
+        EntityManager em = emf.createEntityManager();
+        
+        try {
+            TypedQuery<Usuarios> query = em.createQuery(
+                "SELECT u FROM Usuarios u WHERE u.correo = :correo AND u.contrasena = :contrasena", Usuarios.class);
+            query.setParameter("correo", correo);
+            query.setParameter("contrasena", contrasena);
+            List<Usuarios> resultados = query.getResultList();
+            return resultados.isEmpty() ? null : resultados.get(0);
+        } finally {
+            em.close();
+        }
+    }
+    
+    public void actualizar(Usuarios usuario) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         
         try {
             tx.begin();
-            em.merge(catedratico);
+            em.merge(usuario);
             tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) {
@@ -114,9 +143,9 @@ public class CatedraticoDAO {
         
         try {
             tx.begin();
-            Catedraticos catedratico = em.find(Catedraticos.class, id);
-            if (catedratico != null) {
-                em.remove(catedratico);
+            Usuarios usuario = em.find(Usuarios.class, id);
+            if (usuario != null) {
+                em.remove(usuario);
             }
             tx.commit();
         } catch (Exception e) {
@@ -135,3 +164,4 @@ public class CatedraticoDAO {
         }
     }
 }
+

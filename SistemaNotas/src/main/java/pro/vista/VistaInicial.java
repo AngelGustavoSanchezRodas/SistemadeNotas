@@ -19,14 +19,15 @@ public class VistaInicial extends javax.swing.JFrame {
      */
     public VistaInicial() {
         initComponents();
+        configurarVentana();
     }
     
     private void configurarVentana() {
-        setSize(900, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.WHITE); // fondo uniforme
         setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        setResizable(false);
     }
 
     /**
@@ -72,6 +73,8 @@ public class VistaInicial extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel3.setBackground(new java.awt.Color(13, 71, 161));
+        jPanel3.setMaximumSize(new java.awt.Dimension(443, 438));
+        jPanel3.setSize(new java.awt.Dimension(443, 438));
 
         txtBienvenido.setEditable(false);
         txtBienvenido.setBackground(new java.awt.Color(13, 71, 161));
@@ -79,11 +82,6 @@ public class VistaInicial extends javax.swing.JFrame {
         txtBienvenido.setForeground(new java.awt.Color(13, 71, 161));
         txtBienvenido.setText("Bienvenido");
         txtBienvenido.setEnabled(false);
-        txtBienvenido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBienvenidoActionPerformed(evt);
-            }
-        });
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Estudiante.png"))); // NOI18N
 
@@ -91,14 +89,14 @@ public class VistaInicial extends javax.swing.JFrame {
 
         jbProfesor.setForeground(new java.awt.Color(197, 134, 156));
         jbProfesor.setText("Profesor");
+        jbProfesor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbProfesorMouseClicked(evt);
+            }
+        });
 
         jbEstudiante.setForeground(new java.awt.Color(197, 134, 156));
         jbEstudiante.setText("Estudiante");
-        jbEstudiante.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbEstudianteActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -139,23 +137,19 @@ public class VistaInicial extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtBienvenidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBienvenidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtBienvenidoActionPerformed
-
-    private void jbEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEstudianteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbEstudianteActionPerformed
+    private void jbProfesorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbProfesorMouseClicked
+        new FormularioLogin().setVisible(true);
+    }//GEN-LAST:event_jbProfesorMouseClicked
 
     /**
      * @param args the command line arguments
@@ -186,10 +180,8 @@ public class VistaInicial extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VistaInicial().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new VistaInicial().setVisible(true);
         });
     }
 

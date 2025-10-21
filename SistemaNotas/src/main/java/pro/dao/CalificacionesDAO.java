@@ -4,7 +4,7 @@
  */
 package pro.dao;
 
-import pro.entities.Catedraticos;
+import pro.entities.Calificaciones;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -16,21 +16,21 @@ import java.util.List;
  *
  * @author USER
  */
-public class CatedraticoDAO {
+public class CalificacionesDAO {
     
     private EntityManagerFactory emf;
     
-    public CatedraticoDAO() {
+    public CalificacionesDAO() {
         emf = Persistence.createEntityManagerFactory("ProPro");
     }
     
-    public void crear(Catedraticos catedratico) {
+    public void crear(Calificaciones calificacion) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         
         try {
             tx.begin();
-            em.persist(catedratico);
+            em.persist(calificacion);
             tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) {
@@ -42,61 +42,76 @@ public class CatedraticoDAO {
         }
     }
     
-    public Catedraticos buscarPorId(Integer id) {
+    public Calificaciones buscarPorId(Integer id) {
         EntityManager em = emf.createEntityManager();
         
         try {
-            return em.find(Catedraticos.class, id);
+            return em.find(Calificaciones.class, id);
         } finally {
             em.close();
         }
     }
     
-    public List<Catedraticos> listarTodos() {
+    public List<Calificaciones> listarTodos() {
         EntityManager em = emf.createEntityManager();
         
         try {
-            TypedQuery<Catedraticos> query = em.createQuery("SELECT c FROM Catedraticos c", Catedraticos.class);
+            TypedQuery<Calificaciones> query = em.createQuery("SELECT c FROM Calificaciones c", Calificaciones.class);
             return query.getResultList();
         } finally {
             em.close();
         }
     }
     
-    public List<Catedraticos> buscarPorEspecialidad(String especialidad) {
+    public List<Calificaciones> buscarPorEstudiante(Integer idEstudiante) {
         EntityManager em = emf.createEntityManager();
         
         try {
-            TypedQuery<Catedraticos> query = em.createQuery(
-                "SELECT c FROM Catedraticos c WHERE c.especialidad = :especialidad", Catedraticos.class);
-            query.setParameter("especialidad", especialidad);
+            TypedQuery<Calificaciones> query = em.createQuery(
+                "SELECT c FROM Calificaciones c WHERE c.idEstudiante.idEstudiante = :idEstudiante", Calificaciones.class);
+            query.setParameter("idEstudiante", idEstudiante);
             return query.getResultList();
         } finally {
             em.close();
         }
     }
     
-    public Catedraticos buscarPorUsuario(Integer idUsuario) {
+    public List<Calificaciones> buscarPorAsignatura(Integer idAsignatura) {
         EntityManager em = emf.createEntityManager();
         
         try {
-            TypedQuery<Catedraticos> query = em.createQuery(
-                "SELECT c FROM Catedraticos c WHERE c.idUsuario.idUsuario = :idUsuario", Catedraticos.class);
-            query.setParameter("idUsuario", idUsuario);
-            List<Catedraticos> resultados = query.getResultList();
+            TypedQuery<Calificaciones> query = em.createQuery(
+                "SELECT c FROM Calificaciones c WHERE c.idAsignatura.idAsignatura = :idAsignatura", Calificaciones.class);
+            query.setParameter("idAsignatura", idAsignatura);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public Calificaciones buscarPorEstudianteYAsignatura(Integer idEstudiante, Integer idAsignatura) {
+        EntityManager em = emf.createEntityManager();
+        
+        try {
+            TypedQuery<Calificaciones> query = em.createQuery(
+                "SELECT c FROM Calificaciones c WHERE c.idEstudiante.idEstudiante = :idEstudiante " +
+                "AND c.idAsignatura.idAsignatura = :idAsignatura", Calificaciones.class);
+            query.setParameter("idEstudiante", idEstudiante);
+            query.setParameter("idAsignatura", idAsignatura);
+            List<Calificaciones> resultados = query.getResultList();
             return resultados.isEmpty() ? null : resultados.get(0);
         } finally {
             em.close();
         }
     }
     
-    public void actualizar(Catedraticos catedratico) {
+    public void actualizar(Calificaciones calificacion) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         
         try {
             tx.begin();
-            em.merge(catedratico);
+            em.merge(calificacion);
             tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) {
@@ -114,9 +129,9 @@ public class CatedraticoDAO {
         
         try {
             tx.begin();
-            Catedraticos catedratico = em.find(Catedraticos.class, id);
-            if (catedratico != null) {
-                em.remove(catedratico);
+            Calificaciones calificacion = em.find(Calificaciones.class, id);
+            if (calificacion != null) {
+                em.remove(calificacion);
             }
             tx.commit();
         } catch (Exception e) {
@@ -135,3 +150,4 @@ public class CatedraticoDAO {
         }
     }
 }
+

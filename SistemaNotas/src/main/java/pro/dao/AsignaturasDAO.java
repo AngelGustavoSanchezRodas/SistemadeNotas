@@ -4,7 +4,7 @@
  */
 package pro.dao;
 
-import pro.entities.Catedraticos;
+import pro.entities.Asignaturas;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -16,21 +16,21 @@ import java.util.List;
  *
  * @author USER
  */
-public class CatedraticoDAO {
+public class AsignaturasDAO {
     
     private EntityManagerFactory emf;
     
-    public CatedraticoDAO() {
+    public AsignaturasDAO() {
         emf = Persistence.createEntityManagerFactory("ProPro");
     }
     
-    public void crear(Catedraticos catedratico) {
+    public void crear(Asignaturas asignatura) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         
         try {
             tx.begin();
-            em.persist(catedratico);
+            em.persist(asignatura);
             tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) {
@@ -42,61 +42,60 @@ public class CatedraticoDAO {
         }
     }
     
-    public Catedraticos buscarPorId(Integer id) {
+    public Asignaturas buscarPorId(Integer id) {
         EntityManager em = emf.createEntityManager();
         
         try {
-            return em.find(Catedraticos.class, id);
+            return em.find(Asignaturas.class, id);
         } finally {
             em.close();
         }
     }
     
-    public List<Catedraticos> listarTodos() {
+    public List<Asignaturas> listarTodos() {
         EntityManager em = emf.createEntityManager();
         
         try {
-            TypedQuery<Catedraticos> query = em.createQuery("SELECT c FROM Catedraticos c", Catedraticos.class);
+            TypedQuery<Asignaturas> query = em.createQuery("SELECT a FROM Asignaturas a", Asignaturas.class);
             return query.getResultList();
         } finally {
             em.close();
         }
     }
     
-    public List<Catedraticos> buscarPorEspecialidad(String especialidad) {
+    public List<Asignaturas> buscarPorCodigo(String codigo) {
         EntityManager em = emf.createEntityManager();
         
         try {
-            TypedQuery<Catedraticos> query = em.createQuery(
-                "SELECT c FROM Catedraticos c WHERE c.especialidad = :especialidad", Catedraticos.class);
-            query.setParameter("especialidad", especialidad);
+            TypedQuery<Asignaturas> query = em.createQuery(
+                "SELECT a FROM Asignaturas a WHERE a.codigo = :codigo", Asignaturas.class);
+            query.setParameter("codigo", codigo);
             return query.getResultList();
         } finally {
             em.close();
         }
     }
     
-    public Catedraticos buscarPorUsuario(Integer idUsuario) {
+    public List<Asignaturas> buscarPorCatedratico(Integer idCatedratico) {
         EntityManager em = emf.createEntityManager();
         
         try {
-            TypedQuery<Catedraticos> query = em.createQuery(
-                "SELECT c FROM Catedraticos c WHERE c.idUsuario.idUsuario = :idUsuario", Catedraticos.class);
-            query.setParameter("idUsuario", idUsuario);
-            List<Catedraticos> resultados = query.getResultList();
-            return resultados.isEmpty() ? null : resultados.get(0);
+            TypedQuery<Asignaturas> query = em.createQuery(
+                "SELECT a FROM Asignaturas a WHERE a.idCatedratico.idCatedratico = :idCatedratico", Asignaturas.class);
+            query.setParameter("idCatedratico", idCatedratico);
+            return query.getResultList();
         } finally {
             em.close();
         }
     }
     
-    public void actualizar(Catedraticos catedratico) {
+    public void actualizar(Asignaturas asignatura) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         
         try {
             tx.begin();
-            em.merge(catedratico);
+            em.merge(asignatura);
             tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) {
@@ -114,9 +113,9 @@ public class CatedraticoDAO {
         
         try {
             tx.begin();
-            Catedraticos catedratico = em.find(Catedraticos.class, id);
-            if (catedratico != null) {
-                em.remove(catedratico);
+            Asignaturas asignatura = em.find(Asignaturas.class, id);
+            if (asignatura != null) {
+                em.remove(asignatura);
             }
             tx.commit();
         } catch (Exception e) {
@@ -135,3 +134,4 @@ public class CatedraticoDAO {
         }
     }
 }
+

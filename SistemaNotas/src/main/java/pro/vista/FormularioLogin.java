@@ -19,14 +19,15 @@ public class FormularioLogin extends javax.swing.JFrame {
      */
     public FormularioLogin() {
         initComponents();
+        configurarVentana();
     }
     
     private void configurarVentana() {
-        setSize(900, 600);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setBackground(Color.WHITE); // fondo uniforme
         setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        setResizable(false);
     }
 
     /**
