@@ -26,10 +26,12 @@ public class VistaEstudiante extends javax.swing.JFrame {
     }
     
     public VistaEstudiante(int idEstudiante) {
-    initComponents();
-    cargarCursosEstudiante(idEstudiante);
-    new VistaEstudiante(idEstudiante).setVisible(true);
+        initComponents();
+        configurarVentana(); // aplica configuración de ventana
+        cargarCursosEstudiante(idEstudiante); // carga los cursos
+        setVisible(true); // mostrar la ventana
     }
+
     
     private void cargarCursosEstudiante(int idEstudiante) {
     EstudiantesDAO estudiantesDAO = new EstudiantesDAO();
@@ -79,7 +81,7 @@ public class VistaEstudiante extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 255));
 
-        jpUsuario.setBackground(new java.awt.Color(255, 102, 255));
+        jpUsuario.setBackground(new java.awt.Color(197, 134, 156));
 
         jbCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Estudiante.png"))); // NOI18N
         jbCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
@@ -227,9 +229,19 @@ public class VistaEstudiante extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCerrarSesionActionPerformed
-        VistaLogOut vistaout = new VistaLogOut();
-        vistaout.setVisible(true);
-        this.dispose();
+        // Mostrar ventana de confirmación
+    int opcion = javax.swing.JOptionPane.showConfirmDialog(
+            this, 
+            "¿Está seguro que desea cerrar sesión?", 
+            "Confirmar salida", 
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+    );
+
+    // Si el usuario confirma, cerrar la ventana
+    if (opcion == javax.swing.JOptionPane.YES_OPTION) {
+        this.dispose(); // Cierra la ventana actual
+    }
     }//GEN-LAST:event_jbCerrarSesionActionPerformed
 
     private void jtCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtCursosMouseClicked

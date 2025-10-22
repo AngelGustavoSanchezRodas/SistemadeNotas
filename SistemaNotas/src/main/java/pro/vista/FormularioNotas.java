@@ -22,7 +22,7 @@ public class FormularioNotas extends javax.swing.JFrame {
     }
     
      private void configurarVentana() {
-        setSize(900, 900);
+
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.WHITE); // fondo uniforme

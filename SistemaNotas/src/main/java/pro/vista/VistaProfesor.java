@@ -26,6 +26,7 @@ public class VistaProfesor extends javax.swing.JFrame {
      */
     public VistaProfesor() {
         initComponents();
+        configurarVentana();
         
     }
     
@@ -33,8 +34,10 @@ public class VistaProfesor extends javax.swing.JFrame {
 
     public VistaProfesor(int idCatedratico) {
         initComponents();
+        configurarVentana();
         this.idCatedratico = idCatedratico;
         cargarCursosCatedratico(idCatedratico);
+        setVisible(true); // Mostrar ventana
     }
     
      private void configurarVentana() {
@@ -43,6 +46,29 @@ public class VistaProfesor extends javax.swing.JFrame {
         getContentPane().setBackground(Color.WHITE); // fondo uniforme
         setFont(new Font("Segoe UI", Font.PLAIN, 14));
     }
+     
+     private void cargarCursosCatedratico(int idCatedratico) {
+    new Thread(() -> {
+        AsignaturasDAO dao = new AsignaturasDAO();
+        // Cambiado a tu método existente
+        List<Asignaturas> cursos = dao.buscarPorCatedratico(idCatedratico);
+
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            DefaultTableModel modelo = (DefaultTableModel) jtCursos.getModel();
+            modelo.setRowCount(0);
+
+            if (cursos == null || cursos.isEmpty()) {
+                System.out.println("No se encontraron cursos para el catedrático con ID " + idCatedratico);
+                return;
+            }
+
+            for (Asignaturas curso : cursos) {
+                modelo.addRow(new Object[]{curso.getNombreAsignatura()});
+            }
+        });
+    }).start();
+    }
+
      
     /**
      * This method is called from within the constructor to initialize the form.
@@ -245,9 +271,19 @@ public class VistaProfesor extends javax.swing.JFrame {
     }//GEN-LAST:event_jsTablaEstudiantesMouseClicked
 
     private void jbCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbCerrarSesionMouseClicked
-        VistaLogOut vistaout = new VistaLogOut();
-        vistaout.setVisible(true);
-        this.dispose();
+        // Mostrar ventana de confirmación
+    int opcion = javax.swing.JOptionPane.showConfirmDialog(
+            this, 
+            "¿Está seguro que desea cerrar sesión?", 
+            "Confirmar salida", 
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+    );
+
+    // Si el usuario confirma, cerrar la ventana
+    if (opcion == javax.swing.JOptionPane.YES_OPTION) {
+        this.dispose(); // Cierra la ventana actual
+    }
     }//GEN-LAST:event_jbCerrarSesionMouseClicked
 
     private void jtCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtCursosMouseClicked
@@ -308,7 +344,5 @@ public class VistaProfesor extends javax.swing.JFrame {
     private javax.swing.JLabel txtvistaPro;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarCursosCatedratico(int idCatedratico) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 }

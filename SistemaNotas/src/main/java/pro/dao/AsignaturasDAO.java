@@ -6,9 +6,7 @@ package pro.dao;
 
 import pro.entities.Asignaturas;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
 
@@ -17,44 +15,38 @@ import java.util.List;
  * @author USER
  */
 public class AsignaturasDAO {
-    
-    private EntityManagerFactory emf;
-    
-    public AsignaturasDAO() {
-        emf = Persistence.createEntityManagerFactory("ProPro");
-    }
-    
+
+    // 🔹 Ya no se crea un EntityManagerFactory en cada DAO.
+    // Todos los métodos usan la instancia única de JPAUtil.
+
     public void crear(Asignaturas asignatura) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction tx = em.getTransaction();
-        
+
         try {
             tx.begin();
             em.persist(asignatura);
             tx.commit();
         } catch (Exception e) {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
+            if (tx.isActive()) tx.rollback();
+            System.err.println("❌ Error al crear la asignatura: " + e.getMessage());
             throw e;
         } finally {
             em.close();
         }
     }
-    
+
     public Asignaturas buscarPorId(Integer id) {
-        EntityManager em = emf.createEntityManager();
-        
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             return em.find(Asignaturas.class, id);
         } finally {
             em.close();
         }
     }
-    
+
     public List<Asignaturas> listarTodos() {
-        EntityManager em = emf.createEntityManager();
-        
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             TypedQuery<Asignaturas> query = em.createQuery("SELECT a FROM Asignaturas a", Asignaturas.class);
             return query.getResultList();
@@ -62,63 +54,58 @@ public class AsignaturasDAO {
             em.close();
         }
     }
-    
+
     public List<Asignaturas> buscarPorCodigo(String codigo) {
-        EntityManager em = emf.createEntityManager();
-        
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             TypedQuery<Asignaturas> query = em.createQuery(
-                "SELECT a FROM Asignaturas a WHERE a.codigo = :codigo", Asignaturas.class);
+                "SELECT a FROM Asignaturas a WHERE a.codigo = :codigo", Asignaturas.class
+            );
             query.setParameter("codigo", codigo);
             return query.getResultList();
         } finally {
             em.close();
         }
     }
-    
+
     public List<Asignaturas> buscarPorCatedratico(int idCatedratico) {
-    EntityManager em = emf.createEntityManager();
-    List<Asignaturas> lista = null;
-
-    try {
-        TypedQuery<Asignaturas> query = em.createQuery(
-            "SELECT a FROM Asignaturas a WHERE a.idCatedratico.idCatedratico = :idCatedratico",
-            Asignaturas.class
-        );
-        query.setParameter("idCatedratico", idCatedratico);
-        lista = query.getResultList();
-    } catch (Exception e) {
-        System.err.println("❌ Error al buscar asignaturas por catedrático: " + e.getMessage());
-    } finally {
-        em.close();
-    }
-
-    return lista;
-    }
-
-    
-    public void actualizar(Asignaturas asignatura) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
-            tx.begin();
-            em.merge(asignatura);
-            tx.commit();
+            TypedQuery<Asignaturas> query = em.createQuery(
+                "SELECT a FROM Asignaturas a WHERE a.idCatedratico.idCatedratico = :idCatedratico",
+                Asignaturas.class
+            );
+            query.setParameter("idCatedratico", idCatedratico);
+            return query.getResultList();
         } catch (Exception e) {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
+            System.err.println(" Error al buscar asignaturas por catedrático: " + e.getMessage());
             throw e;
         } finally {
             em.close();
         }
     }
-    
-    public void eliminar(Integer id) {
-        EntityManager em = emf.createEntityManager();
+
+    public void actualizar(Asignaturas asignatura) {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction tx = em.getTransaction();
-        
+
+        try {
+            tx.begin();
+            em.merge(asignatura);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            System.err.println("❌ Error al actualizar la asignatura: " + e.getMessage());
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    public void eliminar(Integer id) {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
         try {
             tx.begin();
             Asignaturas asignatura = em.find(Asignaturas.class, id);
@@ -127,19 +114,16 @@ public class AsignaturasDAO {
             }
             tx.commit();
         } catch (Exception e) {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
+            if (tx.isActive()) tx.rollback();
+            System.err.println(" Error al eliminar la asignatura: " + e.getMessage());
             throw e;
         } finally {
             em.close();
         }
     }
-    
+
+    // 🔹 Este método solo llama al cierre global de JPAUtil
     public void cerrar() {
-        if (emf != null && emf.isOpen()) {
-            emf.close();
-        }
+        JPAUtil.cerrar();
     }
 }
-
