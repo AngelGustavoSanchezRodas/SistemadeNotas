@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="3.1" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+
   <persistence-unit name="ProPro" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+    <!-- Entidades -->
     <class>pro.entities.Calificaciones</class>
     <class>pro.entities.Estudiantes</class>
     <class>pro.entities.Catedraticos</class>
     <class>pro.entities.Asignaturas</class>
     <class>pro.entities.Usuarios</class>
+
     <properties>
+      <!-- 🔹 CONFIGURACIÓN DE CONEXIÓN -->
+      <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://svr-prog2.postgres.database.azure.com:5432/dinamita"/>
       <property name="jakarta.persistence.jdbc.user" value="usr_root_db"/>
-      <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="jakarta.persistence.jdbc.password" value="UMG_$2025Pro2"/>
-      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+
+      <!-- 🔹 CONFIGURACIÓN DE HIBERNATE -->
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+      <property name="hibernate.hbm2ddl.auto" value="validate"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.connection.sslmode" value="require"/>
+
+      <!-- 🔹 OPCIONAL: Desactiva caché antigua -->
+      <property name="hibernate.cache.use_second_level_cache" value="false"/>
+      <property name="hibernate.cache.use_query_cache" value="false"/>
     </properties>
   </persistence-unit>
+
 </persistence>

@@ -11,6 +11,7 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
+import pro.entities.Asignaturas;
 
 /**
  *
@@ -148,5 +149,22 @@ public class EstudiantesDAO {
             emf.close();
         }
     }
+    
+    public List<Asignaturas> obtenerCursosEstudiante(Integer idEstudiante) {
+    EntityManager em = emf.createEntityManager();
+    try {
+        // Seleccionamos directamente las asignaturas relacionadas a las calificaciones del estudiante
+        TypedQuery<Asignaturas> query = em.createQuery(
+            "SELECT c.idAsignatura FROM Calificaciones c WHERE c.idEstudiante.idEstudiante = :idEstudiante",
+            Asignaturas.class
+        );
+        query.setParameter("idEstudiante", idEstudiante);
+        return query.getResultList();
+    } finally {
+        em.close();
+    }
+}
+
+
 }
 

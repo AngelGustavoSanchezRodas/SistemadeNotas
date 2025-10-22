@@ -40,8 +40,8 @@ public class VistaLogOut extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         txtAviso = new javax.swing.JLabel();
-        txtSi = new javax.swing.JButton();
-        txtNo = new javax.swing.JButton();
+        jbSi = new javax.swing.JButton();
+        jbNo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,15 +51,25 @@ public class VistaLogOut extends javax.swing.JFrame {
         txtAviso.setForeground(new java.awt.Color(0, 0, 0));
         txtAviso.setText("¿Desea Cerrar Sesion?");
 
-        txtSi.setBackground(new java.awt.Color(197, 134, 156));
-        txtSi.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        txtSi.setForeground(new java.awt.Color(0, 0, 0));
-        txtSi.setText("SI");
+        jbSi.setBackground(new java.awt.Color(197, 134, 156));
+        jbSi.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jbSi.setForeground(new java.awt.Color(0, 0, 0));
+        jbSi.setText("SI");
+        jbSi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSiActionPerformed(evt);
+            }
+        });
 
-        txtNo.setBackground(new java.awt.Color(197, 134, 156));
-        txtNo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        txtNo.setForeground(new java.awt.Color(0, 0, 0));
-        txtNo.setText("NO");
+        jbNo.setBackground(new java.awt.Color(197, 134, 156));
+        jbNo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jbNo.setForeground(new java.awt.Color(0, 0, 0));
+        jbNo.setText("NO");
+        jbNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -69,9 +79,9 @@ public class VistaLogOut extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(59, 59, 59)
-                        .addComponent(txtSi, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbSi, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
-                        .addComponent(txtNo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jbNo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addComponent(txtAviso)))
@@ -84,8 +94,8 @@ public class VistaLogOut extends javax.swing.JFrame {
                 .addComponent(txtAviso)
                 .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNo, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
-                    .addComponent(txtSi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jbNo, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                    .addComponent(jbSi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(73, Short.MAX_VALUE))
         );
 
@@ -102,6 +112,14 @@ public class VistaLogOut extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSiActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jbSiActionPerformed
+
+    private void jbNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNoActionPerformed
+        
+    }//GEN-LAST:event_jbNoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,8 +158,8 @@ public class VistaLogOut extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jbNo;
+    private javax.swing.JButton jbSi;
     private javax.swing.JLabel txtAviso;
-    private javax.swing.JButton txtNo;
-    private javax.swing.JButton txtSi;
     // End of variables declaration//GEN-END:variables
 }

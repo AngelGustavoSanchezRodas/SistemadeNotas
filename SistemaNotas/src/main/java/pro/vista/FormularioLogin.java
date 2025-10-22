@@ -7,6 +7,12 @@ package pro.vista;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JFrame;
+import pro.dao.CatedraticoDAO;
+import pro.dao.EstudiantesDAO;
+import pro.dao.UsuariosDAO;
+import pro.entities.Catedraticos;
+import pro.entities.Estudiantes;
+import pro.entities.Usuarios;
 
 /**
  *
@@ -17,6 +23,15 @@ public class FormularioLogin extends javax.swing.JFrame {
     /**
      * Creates new form FormularioNotas
      */
+    
+    private String rol;
+
+    public FormularioLogin(String rol) {
+        initComponents();
+        this.rol = rol;
+        configurarVentana();
+    }
+
     public FormularioLogin() {
         initComponents();
         configurarVentana();
@@ -72,16 +87,15 @@ public class FormularioLogin extends javax.swing.JFrame {
         txtcontra.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtcontra.setText("CONTRASEÑA");
 
-        txtContraseña.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtContraseñaActionPerformed(evt);
-            }
-        });
-
         jbEnviar.setBackground(new java.awt.Color(197, 134, 156));
         jbEnviar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jbEnviar.setForeground(new java.awt.Color(0, 0, 0));
         jbEnviar.setText("ENVIAR");
+        jbEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEnviarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -146,13 +160,88 @@ public class FormularioLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseñaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtContraseñaActionPerformed
-
     private void jbRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegresarActionPerformed
-        // TODO add your handling code here:
+        VistaInicial vista = new VistaInicial();
+        vista.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jbRegresarActionPerformed
+
+    private void jbEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEnviarActionPerformed
+         String correo = txtcorreo.getText().trim();
+    String contraseña = new String(txtContraseña.getPassword());
+
+    // Validar campos vacíos
+    if (correo.isEmpty() || contraseña.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Por favor, complete todos los campos.",
+            "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    try {
+        UsuariosDAO usuariosDAO = new UsuariosDAO();
+        Usuarios usuario = usuariosDAO.autenticar(correo, contraseña);
+
+        if (usuario == null) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Correo o contraseña incorrectos.",
+                "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String rolUsuario = usuario.getRol();
+
+        // Verificar que el rol seleccionado coincida con el del usuario
+        if (!rolUsuario.equalsIgnoreCase(this.rol)) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "El rol seleccionado (" + this.rol + ") no coincide con su tipo de usuario (" + rolUsuario + ").",
+                "Acceso denegado", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Bienvenido " + rolUsuario + ": " + usuario.getNombreUsuario());
+
+        // Redirigir según el rol
+        if (rolUsuario.equalsIgnoreCase("catedratico")) {
+            CatedraticoDAO catedraticoDAO = new CatedraticoDAO();
+            Catedraticos catedratico = catedraticoDAO.buscarPorUsuario(usuario.getIdUsuario());
+
+            if (catedratico != null) {
+                new VistaProfesor(catedratico.getIdCatedratico()).setVisible(true);
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                    "No se encontró información del catedrático en la base de datos.",
+                    "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } 
+        else if (rolUsuario.equalsIgnoreCase("estudiante")) {
+            EstudiantesDAO estudiantesDAO = new EstudiantesDAO();
+            Estudiantes estudiante = estudiantesDAO.buscarPorUsuario(usuario.getIdUsuario());
+
+            if (estudiante != null) {
+                new VistaEstudiante(estudiante.getIdEstudiante()).setVisible(true);
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                    "No se encontró información del estudiante en la base de datos.",
+                    "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } 
+        else {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Rol no reconocido en la base de datos.",
+                "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+
+        // Cerrar ventana de login
+        this.dispose();
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Error al iniciar sesión:\n" + e.getMessage(),
+            "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_jbEnviarActionPerformed
 
     /**
      * @param args the command line arguments

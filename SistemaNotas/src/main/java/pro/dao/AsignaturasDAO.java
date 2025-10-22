@@ -76,18 +76,26 @@ public class AsignaturasDAO {
         }
     }
     
-    public List<Asignaturas> buscarPorCatedratico(Integer idCatedratico) {
-        EntityManager em = emf.createEntityManager();
-        
-        try {
-            TypedQuery<Asignaturas> query = em.createQuery(
-                "SELECT a FROM Asignaturas a WHERE a.idCatedratico.idCatedratico = :idCatedratico", Asignaturas.class);
-            query.setParameter("idCatedratico", idCatedratico);
-            return query.getResultList();
-        } finally {
-            em.close();
-        }
+    public List<Asignaturas> buscarPorCatedratico(int idCatedratico) {
+    EntityManager em = emf.createEntityManager();
+    List<Asignaturas> lista = null;
+
+    try {
+        TypedQuery<Asignaturas> query = em.createQuery(
+            "SELECT a FROM Asignaturas a WHERE a.idCatedratico.idCatedratico = :idCatedratico",
+            Asignaturas.class
+        );
+        query.setParameter("idCatedratico", idCatedratico);
+        lista = query.getResultList();
+    } catch (Exception e) {
+        System.err.println("❌ Error al buscar asignaturas por catedrático: " + e.getMessage());
+    } finally {
+        em.close();
     }
+
+    return lista;
+    }
+
     
     public void actualizar(Asignaturas asignatura) {
         EntityManager em = emf.createEntityManager();

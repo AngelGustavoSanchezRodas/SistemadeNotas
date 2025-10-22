@@ -6,13 +6,17 @@ package pro.vista;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import pro.dao.AsignaturasDAO;
+import pro.entities.Asignaturas;
 
 /**
  *
  * @author USER
  */
-public class ColocacionDeNotasPro extends javax.swing.JFrame {
+public class VistaProfesor extends javax.swing.JFrame {
     
     
     
@@ -20,19 +24,26 @@ public class ColocacionDeNotasPro extends javax.swing.JFrame {
     /**
      * Creates new form VistaProfesor
      */
-    public ColocacionDeNotasPro() {
+    public VistaProfesor() {
         initComponents();
         
     }
     
+    private int idCatedratico;
+
+    public VistaProfesor(int idCatedratico) {
+        initComponents();
+        this.idCatedratico = idCatedratico;
+        cargarCursosCatedratico(idCatedratico);
+    }
+    
      private void configurarVentana() {
-        setSize(900, 900);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.WHITE); // fondo uniforme
         setFont(new Font("Segoe UI", Font.PLAIN, 14));
     }
-
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,9 +58,9 @@ public class ColocacionDeNotasPro extends javax.swing.JFrame {
         jpCrusos = new javax.swing.JPanel();
         jbCerrarSesion = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jtCursos = new javax.swing.JTable();
         jsTablaEstudiantes = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtEstudiantes = new javax.swing.JTable();
         jbEstudiantesCurso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -75,7 +86,7 @@ public class ColocacionDeNotasPro extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jtCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -94,14 +105,14 @@ public class ColocacionDeNotasPro extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtCursos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable2MouseClicked(evt);
+                jtCursosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setResizable(false);
+        jScrollPane1.setViewportView(jtCursos);
+        if (jtCursos.getColumnModel().getColumnCount() > 0) {
+            jtCursos.getColumnModel().getColumn(0).setResizable(false);
         }
 
         javax.swing.GroupLayout jpCrusosLayout = new javax.swing.GroupLayout(jpCrusos);
@@ -135,7 +146,7 @@ public class ColocacionDeNotasPro extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtEstudiantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -154,18 +165,18 @@ public class ColocacionDeNotasPro extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtEstudiantes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                jtEstudiantesMouseClicked(evt);
             }
         });
-        jsTablaEstudiantes.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(300);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jsTablaEstudiantes.setViewportView(jtEstudiantes);
+        if (jtEstudiantes.getColumnModel().getColumnCount() > 0) {
+            jtEstudiantes.getColumnModel().getColumn(0).setResizable(false);
+            jtEstudiantes.getColumnModel().getColumn(0).setPreferredWidth(300);
+            jtEstudiantes.getColumnModel().getColumn(1).setResizable(false);
+            jtEstudiantes.getColumnModel().getColumn(2).setResizable(false);
+            jtEstudiantes.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jbEstudiantesCurso.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -234,16 +245,18 @@ public class ColocacionDeNotasPro extends javax.swing.JFrame {
     }//GEN-LAST:event_jsTablaEstudiantesMouseClicked
 
     private void jbCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbCerrarSesionMouseClicked
-        // TODO add your handling code here:
+        VistaLogOut vistaout = new VistaLogOut();
+        vistaout.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jbCerrarSesionMouseClicked
 
-    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTable2MouseClicked
+    private void jtCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtCursosMouseClicked
+       
+    }//GEN-LAST:event_jtCursosMouseClicked
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void jtEstudiantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtEstudiantesMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_jtEstudiantesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -262,21 +275,23 @@ public class ColocacionDeNotasPro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ColocacionDeNotasPro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ColocacionDeNotasPro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ColocacionDeNotasPro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ColocacionDeNotasPro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ColocacionDeNotasPro().setVisible(true);
+                new VistaProfesor().setVisible(true);
             }
         });
     }
@@ -284,12 +299,16 @@ public class ColocacionDeNotasPro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JButton jbCerrarSesion;
     private javax.swing.JLabel jbEstudiantesCurso;
     private javax.swing.JPanel jpCrusos;
     private javax.swing.JScrollPane jsTablaEstudiantes;
+    private javax.swing.JTable jtCursos;
+    private javax.swing.JTable jtEstudiantes;
     private javax.swing.JLabel txtvistaPro;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarCursosCatedratico(int idCatedratico) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

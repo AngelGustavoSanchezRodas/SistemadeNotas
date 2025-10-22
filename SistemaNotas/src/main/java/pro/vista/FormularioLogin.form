@@ -148,9 +148,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtContrase&#xf1;a">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtContrase&#xf1;aActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jbEnviar">
           <Properties>
@@ -165,6 +162,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="ENVIAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbEnviarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

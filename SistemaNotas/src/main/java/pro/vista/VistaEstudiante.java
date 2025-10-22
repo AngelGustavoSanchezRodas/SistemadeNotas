@@ -6,7 +6,11 @@ package pro.vista;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import pro.dao.EstudiantesDAO;
+import pro.entities.Asignaturas;
 
 /**
  *
@@ -21,11 +25,34 @@ public class VistaEstudiante extends javax.swing.JFrame {
         initComponents();
     }
     
+    public VistaEstudiante(int idEstudiante) {
+    initComponents();
+    cargarCursosEstudiante(idEstudiante);
+    new VistaEstudiante(idEstudiante).setVisible(true);
+    }
+    
+    private void cargarCursosEstudiante(int idEstudiante) {
+    EstudiantesDAO estudiantesDAO = new EstudiantesDAO();
+    List<Asignaturas> cursos = estudiantesDAO.obtenerCursosEstudiante(idEstudiante);
+
+    DefaultTableModel modelo = (DefaultTableModel) jtCursos.getModel();
+    modelo.setRowCount(0); 
+
+    if (cursos == null || cursos.isEmpty()) {
+        System.out.println("No se encontraron cursos para el estudiante con ID " + idEstudiante);
+        return;
+    }
+
+    for (Asignaturas curso : cursos) {
+        System.out.println("Curso encontrado: " + curso.getNombreAsignatura()); // Para depuración
+        modelo.addRow(new Object[]{ curso.getNombreAsignatura() });
+    }
+    }
+    
     private void configurarVentana() {
-        setSize(900, 900);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.WHITE); // fondo uniforme
+        getContentPane().setBackground(Color.WHITE); 
         setFont(new Font("Segoe UI", Font.PLAIN, 14));
     }
 
@@ -55,20 +82,40 @@ public class VistaEstudiante extends javax.swing.JFrame {
         jpUsuario.setBackground(new java.awt.Color(255, 102, 255));
 
         jbCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Estudiante.png"))); // NOI18N
+        jbCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCerrarSesionActionPerformed(evt);
+            }
+        });
 
-        jtCursos.setAutoCreateColumnsFromModel(false);
         jtCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Cursos"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtCursos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtCursosMouseClicked(evt);
+            }
+        });
         jspCursos.setViewportView(jtCursos);
+        if (jtCursos.getColumnModel().getColumnCount() > 0) {
+            jtCursos.getColumnModel().getColumn(0).setResizable(false);
+        }
 
         javax.swing.GroupLayout jpCursosLayout = new javax.swing.GroupLayout(jpCursos);
         jpCursos.setLayout(jpCursosLayout);
@@ -78,7 +125,7 @@ public class VistaEstudiante extends javax.swing.JFrame {
         );
         jpCursosLayout.setVerticalGroup(
             jpCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jspCursos, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+            .addComponent(jspCursos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jpUsuarioLayout = new javax.swing.GroupLayout(jpUsuario);
@@ -107,16 +154,29 @@ public class VistaEstudiante extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Examen 1", "Examen 2", "Examen Final"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -166,6 +226,16 @@ public class VistaEstudiante extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCerrarSesionActionPerformed
+        VistaLogOut vistaout = new VistaLogOut();
+        vistaout.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jbCerrarSesionActionPerformed
+
+    private void jtCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtCursosMouseClicked
+
+    }//GEN-LAST:event_jtCursosMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -212,4 +282,6 @@ public class VistaEstudiante extends javax.swing.JFrame {
     private javax.swing.JScrollPane jspCursos;
     private javax.swing.JTable jtCursos;
     // End of variables declaration//GEN-END:variables
+
+  
 }

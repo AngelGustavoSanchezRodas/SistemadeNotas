@@ -22,6 +22,8 @@ public class VistaInicial extends javax.swing.JFrame {
         configurarVentana();
     }
     
+    
+    
     private void configurarVentana() {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,7 +76,6 @@ public class VistaInicial extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(13, 71, 161));
         jPanel3.setMaximumSize(new java.awt.Dimension(443, 438));
-        jPanel3.setSize(new java.awt.Dimension(443, 438));
 
         txtBienvenido.setEditable(false);
         txtBienvenido.setBackground(new java.awt.Color(13, 71, 161));
@@ -89,14 +90,19 @@ public class VistaInicial extends javax.swing.JFrame {
 
         jbProfesor.setForeground(new java.awt.Color(197, 134, 156));
         jbProfesor.setText("Profesor");
-        jbProfesor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jbProfesorMouseClicked(evt);
+        jbProfesor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbProfesorActionPerformed(evt);
             }
         });
 
         jbEstudiante.setForeground(new java.awt.Color(197, 134, 156));
         jbEstudiante.setText("Estudiante");
+        jbEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEstudianteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -147,9 +153,17 @@ public class VistaInicial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbProfesorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbProfesorMouseClicked
-        new FormularioLogin().setVisible(true);
-    }//GEN-LAST:event_jbProfesorMouseClicked
+    private void jbEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEstudianteActionPerformed
+        FormularioLogin login = new FormularioLogin("estudiante");
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jbEstudianteActionPerformed
+
+    private void jbProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbProfesorActionPerformed
+        FormularioLogin login = new FormularioLogin("catedratico");
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jbProfesorActionPerformed
 
     /**
      * @param args the command line arguments
