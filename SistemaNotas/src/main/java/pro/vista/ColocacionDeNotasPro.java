@@ -13,12 +13,16 @@ import javax.swing.JFrame;
  * @author USER
  */
 public class ColocacionDeNotasPro extends javax.swing.JFrame {
+    
+    
+    
 
     /**
      * Creates new form VistaProfesor
      */
     public ColocacionDeNotasPro() {
         initComponents();
+        
     }
     
      private void configurarVentana() {
