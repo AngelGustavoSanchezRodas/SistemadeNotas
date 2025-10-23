@@ -25,14 +25,33 @@ public class VistaEstudiante extends javax.swing.JFrame {
         initComponents();
     }
     
+    private int idEstudiante;
+    
     public VistaEstudiante(int idEstudiante) {
-        initComponents();
-        configurarVentana(); // aplica configuración de ventana
-        cargarCursosEstudiante(idEstudiante); // carga los cursos
-        setVisible(true); // mostrar la ventana
+    initComponents();
+    this.idEstudiante = idEstudiante;
+    configurarVentana();
+    cargarCursosEstudiante(idEstudiante);
+    setVisible(true);
     }
 
-    
+    private void cargarNotasCurso(int idEstudiante, int idAsignatura) {
+    EstudiantesDAO estudiantesDAO = new EstudiantesDAO();
+    List<Object[]> notas = estudiantesDAO.obtenerNotasPorCurso(idEstudiante, idAsignatura);
+
+    DefaultTableModel modeloNotas = (DefaultTableModel) jtNotas.getModel();
+    modeloNotas.setRowCount(0); // limpiar tabla
+
+    if (notas == null || notas.isEmpty()) {
+        System.out.println("No se encontraron notas para el curso con ID: " + idAsignatura);
+        return;
+    }
+
+    for (Object[] fila : notas) {
+        modeloNotas.addRow(fila);
+    }
+    }
+
     private void cargarCursosEstudiante(int idEstudiante) {
     EstudiantesDAO estudiantesDAO = new EstudiantesDAO();
     List<Asignaturas> cursos = estudiantesDAO.obtenerCursosEstudiante(idEstudiante);
@@ -75,7 +94,7 @@ public class VistaEstudiante extends javax.swing.JFrame {
         jtCursos = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtNotas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -154,7 +173,7 @@ public class VistaEstudiante extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -173,11 +192,11 @@ public class VistaEstudiante extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jScrollPane1.setViewportView(jtNotas);
+        if (jtNotas.getColumnModel().getColumnCount() > 0) {
+            jtNotas.getColumnModel().getColumn(0).setResizable(false);
+            jtNotas.getColumnModel().getColumn(1).setResizable(false);
+            jtNotas.getColumnModel().getColumn(2).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -245,7 +264,28 @@ public class VistaEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jbCerrarSesionActionPerformed
 
     private void jtCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtCursosMouseClicked
+        int fila = jtCursos.getSelectedRow();
+        if (fila == -1) return;
 
+        String nombreCurso = jtCursos.getValueAt(fila, 0).toString();
+        EstudiantesDAO estudiantesDAO = new EstudiantesDAO();
+
+        // 🔹 Obtener todos los cursos del estudiante
+        List<Asignaturas> cursos = estudiantesDAO.obtenerCursosEstudiante(idEstudiante);
+
+        // 🔹 Buscar el curso que coincide con el nombre seleccionado
+        Asignaturas cursoSeleccionado = cursos.stream()
+                .filter(c -> c.getNombreAsignatura().equals(nombreCurso))
+                .findFirst()
+                .orElse(null);
+
+        if (cursoSeleccionado == null) {
+            System.out.println("No se encontró el curso seleccionado.");
+            return;
+        }
+
+        // 🔹 Mostrar notas del curso seleccionado
+        cargarNotasCurso(idEstudiante, cursoSeleccionado.getIdAsignatura());
     }//GEN-LAST:event_jtCursosMouseClicked
 
     /**
@@ -287,12 +327,12 @@ public class VistaEstudiante extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jbCerrarSesion;
     private javax.swing.JPanel jpCursos;
     private javax.swing.JPanel jpUsuario;
     private javax.swing.JScrollPane jspCursos;
     private javax.swing.JTable jtCursos;
+    private javax.swing.JTable jtNotas;
     // End of variables declaration//GEN-END:variables
 
   

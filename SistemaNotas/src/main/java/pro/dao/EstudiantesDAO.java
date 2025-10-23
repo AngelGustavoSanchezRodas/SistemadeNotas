@@ -137,4 +137,43 @@ public class EstudiantesDAO {
             em.close();
         }
     }
+    
+    public List<Object[]> obtenerNotasPorCurso(Integer idEstudiante, Integer idAsignatura) {
+    EntityManager em = JPAUtil.getEntityManager();
+    try {
+        TypedQuery<Object[]> query = em.createQuery(
+            "SELECT c.examen1, c.examen2, c.examenFinal " +
+            "FROM Calificaciones c " +
+            "WHERE c.idEstudiante.idEstudiante = :idEstudiante " +
+            "AND c.idAsignatura.idAsignatura = :idAsignatura",
+            Object[].class
+        );
+        query.setParameter("idEstudiante", idEstudiante);
+        query.setParameter("idAsignatura", idAsignatura);
+        return query.getResultList();
+    } finally {
+        em.close();
+    }
+    }
+    
+    public List<Object[]> obtenerEstudiantesPorCurso(Integer idAsignatura) {
+    EntityManager em = JPAUtil.getEntityManager();
+    try {
+        TypedQuery<Object[]> query = em.createQuery(
+            "SELECT e.idUsuario.nombreUsuario, c.examen1, c.examen2, c.examenFinal " +
+            "FROM Calificaciones c " +
+            "JOIN c.idEstudiante e " +
+            "WHERE c.idAsignatura.idAsignatura = :idAsignatura",
+            Object[].class
+        );
+        query.setParameter("idAsignatura", idAsignatura);
+        return query.getResultList();
+    } finally {
+        em.close();
+    }
+}
+
+
+    
+
 }

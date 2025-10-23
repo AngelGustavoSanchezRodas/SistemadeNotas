@@ -4,11 +4,11 @@
  */
 package pro.dao;
 
-import pro.entities.Asignaturas;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
+import pro.entities.Asignaturas;
 
 /**
  *

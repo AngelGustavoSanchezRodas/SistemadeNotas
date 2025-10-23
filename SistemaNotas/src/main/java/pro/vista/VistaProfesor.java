@@ -8,8 +8,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pro.dao.AsignaturasDAO;
+import pro.dao.EstudiantesDAO;
 import pro.entities.Asignaturas;
 
 /**
@@ -48,26 +50,45 @@ public class VistaProfesor extends javax.swing.JFrame {
     }
      
      private void cargarCursosCatedratico(int idCatedratico) {
-    new Thread(() -> {
-        AsignaturasDAO dao = new AsignaturasDAO();
-        // Cambiado a tu método existente
-        List<Asignaturas> cursos = dao.buscarPorCatedratico(idCatedratico);
+        new Thread(() -> {
+            AsignaturasDAO dao = new AsignaturasDAO();
+            // Cambiado a tu método existente
+            List<Asignaturas> cursos = dao.buscarPorCatedratico(idCatedratico);
 
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            DefaultTableModel modelo = (DefaultTableModel) jtCursos.getModel();
-            modelo.setRowCount(0);
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                DefaultTableModel modelo = (DefaultTableModel) jtCursos.getModel();
+                modelo.setRowCount(0);
 
-            if (cursos == null || cursos.isEmpty()) {
-                System.out.println("No se encontraron cursos para el catedrático con ID " + idCatedratico);
-                return;
-            }
+                if (cursos == null || cursos.isEmpty()) {
+                    System.out.println("No se encontraron cursos para el catedrático con ID " + idCatedratico);
+                    return;
+                }
 
-            for (Asignaturas curso : cursos) {
-                modelo.addRow(new Object[]{curso.getNombreAsignatura()});
-            }
-        });
-    }).start();
+                for (Asignaturas curso : cursos) {
+                    modelo.addRow(new Object[]{curso.getNombreAsignatura()});
+                }
+            });
+        }).start();
     }
+     
+    private void cargarEstudiantesDelCurso(int idAsignatura) {
+        EstudiantesDAO dao = new EstudiantesDAO();
+        List<Object[]> estudiantes = dao.obtenerEstudiantesPorCurso(idAsignatura);
+
+        DefaultTableModel modelo = (DefaultTableModel) jtEstudiantes.getModel();
+        modelo.setRowCount(0); // limpiar tabla
+
+        if (estudiantes == null || estudiantes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay estudiantes inscritos en este curso.");
+            return;
+        }
+
+        for (Object[] fila : estudiantes) {
+            modelo.addRow(fila);
+        }
+        }
+
+
 
      
     /**
@@ -83,11 +104,10 @@ public class VistaProfesor extends javax.swing.JFrame {
         txtvistaPro = new javax.swing.JLabel();
         jpCrusos = new javax.swing.JPanel();
         jbCerrarSesion = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jscMenu = new javax.swing.JScrollPane();
         jtCursos = new javax.swing.JTable();
-        jsTablaEstudiantes = new javax.swing.JScrollPane();
+        jscContenido = new javax.swing.JScrollPane();
         jtEstudiantes = new javax.swing.JTable();
-        jbEstudiantesCurso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,12 +123,6 @@ public class VistaProfesor extends javax.swing.JFrame {
         jbCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbCerrarSesionMouseClicked(evt);
-            }
-        });
-
-        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jScrollPane1MouseClicked(evt);
             }
         });
 
@@ -136,7 +150,7 @@ public class VistaProfesor extends javax.swing.JFrame {
                 jtCursosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jtCursos);
+        jscMenu.setViewportView(jtCursos);
         if (jtCursos.getColumnModel().getColumnCount() > 0) {
             jtCursos.getColumnModel().getColumn(0).setResizable(false);
         }
@@ -152,7 +166,7 @@ public class VistaProfesor extends javax.swing.JFrame {
                         .addComponent(jbCerrarSesion))
                     .addGroup(jpCrusosLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jscMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jpCrusosLayout.setVerticalGroup(
@@ -161,16 +175,9 @@ public class VistaProfesor extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(jbCerrarSesion)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jscMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jsTablaEstudiantes.setEnabled(false);
-        jsTablaEstudiantes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jsTablaEstudiantesMouseClicked(evt);
-            }
-        });
 
         jtEstudiantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -196,17 +203,13 @@ public class VistaProfesor extends javax.swing.JFrame {
                 jtEstudiantesMouseClicked(evt);
             }
         });
-        jsTablaEstudiantes.setViewportView(jtEstudiantes);
+        jscContenido.setViewportView(jtEstudiantes);
         if (jtEstudiantes.getColumnModel().getColumnCount() > 0) {
             jtEstudiantes.getColumnModel().getColumn(0).setResizable(false);
-            jtEstudiantes.getColumnModel().getColumn(0).setPreferredWidth(300);
             jtEstudiantes.getColumnModel().getColumn(1).setResizable(false);
             jtEstudiantes.getColumnModel().getColumn(2).setResizable(false);
             jtEstudiantes.getColumnModel().getColumn(3).setResizable(false);
         }
-
-        jbEstudiantesCurso.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jbEstudiantesCurso.setText("Estudiantes");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -214,61 +217,37 @@ public class VistaProfesor extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jpCrusos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(371, 371, 371)
-                        .addComponent(jbEstudiantesCurso)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtvistaPro)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                        .addComponent(jsTablaEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(32, Short.MAX_VALUE))))
+                .addGap(18, 18, 18)
+                .addComponent(jscContenido, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtvistaPro)
+                .addContainerGap(421, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jpCrusos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jscContenido)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(txtvistaPro))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jbEstudiantesCurso)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jsTablaEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                        .addComponent(txtvistaPro)
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(215, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(131, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jScrollPane1MouseClicked
-
-    private void jsTablaEstudiantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jsTablaEstudiantesMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jsTablaEstudiantesMouseClicked
 
     private void jbCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbCerrarSesionMouseClicked
         // Mostrar ventana de confirmación
@@ -287,11 +266,33 @@ public class VistaProfesor extends javax.swing.JFrame {
     }//GEN-LAST:event_jbCerrarSesionMouseClicked
 
     private void jtCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtCursosMouseClicked
-       
+        if (evt.getClickCount() == 2) {  // Doble clic
+        int fila = jtCursos.getSelectedRow();
+        if (fila == -1) return;
+
+        String nombreCurso = jtCursos.getValueAt(fila, 0).toString();
+
+        // Buscar el curso seleccionado y su ID
+        AsignaturasDAO daoA = new AsignaturasDAO();
+        List<Asignaturas> cursos = daoA.buscarPorCatedratico(idCatedratico);
+
+        Asignaturas cursoSeleccionado = cursos.stream()
+                .filter(c -> c.getNombreAsignatura().equals(nombreCurso))
+                .findFirst()
+                .orElse(null);
+
+        if (cursoSeleccionado == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró el curso seleccionado.");
+            return;
+        }
+
+        // Cargar estudiantes del curso seleccionado
+        cargarEstudiantesDelCurso(cursoSeleccionado.getIdAsignatura());
+    }
     }//GEN-LAST:event_jtCursosMouseClicked
 
     private void jtEstudiantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtEstudiantesMouseClicked
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jtEstudiantesMouseClicked
 
     /**
@@ -334,11 +335,10 @@ public class VistaProfesor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbCerrarSesion;
-    private javax.swing.JLabel jbEstudiantesCurso;
     private javax.swing.JPanel jpCrusos;
-    private javax.swing.JScrollPane jsTablaEstudiantes;
+    private javax.swing.JScrollPane jscContenido;
+    private javax.swing.JScrollPane jscMenu;
     private javax.swing.JTable jtCursos;
     private javax.swing.JTable jtEstudiantes;
     private javax.swing.JLabel txtvistaPro;
