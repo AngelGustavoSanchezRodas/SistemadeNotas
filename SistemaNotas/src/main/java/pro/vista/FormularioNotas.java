@@ -7,6 +7,9 @@ package pro.vista;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import pro.dao.CalificacionesDAO;
+import pro.entities.Calificaciones;
 
 /**
  *
@@ -20,6 +23,35 @@ public class FormularioNotas extends javax.swing.JFrame {
     public FormularioNotas() {
         initComponents();
     }
+   // Variables de clase
+    private int idEstudiante;
+    private int idAsignatura;
+    private String nombreEstudiante;
+
+    // Método público para recibir los datos
+    public void setDatosEstudiante(int idEstudiante, int idAsignatura, String nombreEstudiante) {
+        this.idEstudiante = idEstudiante;
+        this.idAsignatura = idAsignatura;
+        this.nombreEstudiante = nombreEstudiante;
+
+        // Actualiza el título o etiqueta del formulario
+        jlTitulo.setText("Ingresar notas para: " + nombreEstudiante);
+    }
+
+
+    
+    private void jcNA1ActionPerformed(java.awt.event.ActionEvent evt) {                                     
+        jtfExamen1.setEnabled(!jcNA1.isSelected());
+    }  
+
+    private void jcNA2ActionPerformed(java.awt.event.ActionEvent evt) {                                     
+        jtfExamen2.setEnabled(!jcNA2.isSelected());
+    }  
+
+    private void jcNA3ActionPerformed(java.awt.event.ActionEvent evt) {                                     
+        jtfExamenFinal.setEnabled(!jcNA3.isSelected());
+    }  
+
     
      private void configurarVentana() {
 
@@ -53,6 +85,7 @@ public class FormularioNotas extends javax.swing.JFrame {
         jcNA3 = new javax.swing.JCheckBox();
         jlExamenFinal = new javax.swing.JLabel();
         jtfExamenFinal = new javax.swing.JTextField();
+        jlTitulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,21 +97,26 @@ public class FormularioNotas extends javax.swing.JFrame {
         jbRegresar.setForeground(new java.awt.Color(0, 0, 0));
         jbRegresar.setText("Regresar");
         jbRegresar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jbRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRegresarActionPerformed(evt);
+            }
+        });
 
         jbEnviar.setBackground(new java.awt.Color(197, 134, 156));
         jbEnviar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jbEnviar.setForeground(new java.awt.Color(0, 0, 0));
         jbEnviar.setText("Enviar");
+        jbEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEnviarActionPerformed(evt);
+            }
+        });
 
         jpNota1.setBackground(new java.awt.Color(197, 134, 156));
         jpNota1.setPreferredSize(new java.awt.Dimension(250, 60));
 
         jcNA1.setText("N.A.");
-        jcNA1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcNA1ActionPerformed(evt);
-            }
-        });
 
         jbExamen1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jbExamen1.setText("Examen 1");
@@ -185,40 +223,42 @@ public class FormularioNotas extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jlTitulo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
         javax.swing.GroupLayout jpFormularioNotas1Layout = new javax.swing.GroupLayout(jpFormularioNotas1);
         jpFormularioNotas1.setLayout(jpFormularioNotas1Layout);
         jpFormularioNotas1Layout.setHorizontalGroup(
             jpFormularioNotas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpFormularioNotas1Layout.createSequentialGroup()
-                .addGroup(jpFormularioNotas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(105, 105, 105)
+                .addGroup(jpFormularioNotas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jpFormularioNotas1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jbRegresar))
-                    .addGroup(jpFormularioNotas1Layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addGroup(jpFormularioNotas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jpNota2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
-                            .addComponent(jpNota1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
-                            .addComponent(jpNotaFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)))
-                    .addGroup(jpFormularioNotas1Layout.createSequentialGroup()
-                        .addGap(295, 295, 295)
-                        .addComponent(jbEnviar)))
+                        .addGap(82, 82, 82)
+                        .addComponent(jbRegresar)
+                        .addGap(82, 82, 82)
+                        .addComponent(jbEnviar))
+                    .addComponent(jpNota2, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                    .addComponent(jpNota1, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                    .addComponent(jpNotaFinal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                    .addComponent(jlTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(193, Short.MAX_VALUE))
         );
         jpFormularioNotas1Layout.setVerticalGroup(
             jpFormularioNotas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpFormularioNotas1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jbRegresar)
-                .addGap(63, 63, 63)
+                .addGap(51, 51, 51)
+                .addComponent(jlTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
                 .addComponent(jpNota1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jpNota2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jpNotaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addComponent(jbEnviar)
-                .addContainerGap())
+                .addGap(32, 32, 32)
+                .addGroup(jpFormularioNotas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbRegresar)
+                    .addComponent(jbEnviar))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -235,13 +275,93 @@ public class FormularioNotas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jcNA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcNA1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcNA1ActionPerformed
-
     private void jtfExamen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfExamen1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfExamen1ActionPerformed
+
+    private void jbRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegresarActionPerformed
+       VistaProfesor vistaP = new VistaProfesor();
+       vistaP.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_jbRegresarActionPerformed
+
+    private void jbEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEnviarActionPerformed
+      try {
+        int notasLlenas = 0;
+        String tipoNota = "";
+        double nota = 0;
+
+        // --- Examen 1 ---
+        if (!jcNA1.isSelected() && !jtfExamen1.getText().trim().isEmpty()) {
+            notasLlenas++;
+            tipoNota = "Examen 1";
+            nota = Double.parseDouble(jtfExamen1.getText().trim());
+            if (nota < 0 || nota > 30) {
+                JOptionPane.showMessageDialog(this, " La nota del Examen 1 debe estar entre 0 y 30.");
+                return;
+            }
+        }
+
+        // --- Examen 2 ---
+        if (!jcNA2.isSelected() && !jtfExamen2.getText().trim().isEmpty()) {
+            notasLlenas++;
+            tipoNota = "Examen 2";
+            nota = Double.parseDouble(jtfExamen2.getText().trim());
+            if (nota < 0 || nota > 30) {
+                JOptionPane.showMessageDialog(this, " La nota del Examen 2 debe estar entre 0 y 30.");
+                return;
+            }
+        }
+
+        // --- Examen Final ---
+        if (!jcNA3.isSelected() && !jtfExamenFinal.getText().trim().isEmpty()) {
+            notasLlenas++;
+            tipoNota = "Examen Final";
+            nota = Double.parseDouble(jtfExamenFinal.getText().trim());
+            if (nota < 0 || nota > 40) {
+                JOptionPane.showMessageDialog(this, " La nota del Examen Final debe estar entre 0 y 40.");
+                return;
+            }
+        }
+
+        if (notasLlenas == 0) {
+            JOptionPane.showMessageDialog(this, " Debes ingresar una nota antes de enviar.");
+            return;
+        }
+
+        if (notasLlenas > 1) {
+            JOptionPane.showMessageDialog(this, "️ Solo puedes enviar UNA nota a la vez.");
+            return;
+        }
+
+        // --- Guardar en BD ---
+        CalificacionesDAO dao = new CalificacionesDAO();
+        Calificaciones cal = dao.buscarPorEstudianteYAsignatura(idEstudiante, idAsignatura);
+
+        if (cal == null) {
+            JOptionPane.showMessageDialog(this, " No se encontró registro de calificación para este estudiante.");
+            return;
+        }
+
+        switch (tipoNota) {
+            case "Examen 1" -> cal.setExamen1((int) nota);
+            case "Examen 2" -> cal.setExamen2((int) nota);
+            case "Examen Final" -> cal.setExamenFinal((int) nota);
+        }
+
+        dao.actualizar(cal);
+
+        JOptionPane.showMessageDialog(this, " Nota registrada con éxito para " + nombreEstudiante);
+        this.dispose(); // cerrar el formulario
+        new VistaProfesor().setVisible(true);
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, " Ingresa un valor numérico válido.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "️ Error al guardar la nota: " + e.getMessage());
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_jbEnviarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -288,6 +408,7 @@ public class FormularioNotas extends javax.swing.JFrame {
     private javax.swing.JCheckBox jcNA2;
     private javax.swing.JCheckBox jcNA3;
     private javax.swing.JLabel jlExamenFinal;
+    private javax.swing.JLabel jlTitulo;
     private javax.swing.JPanel jpFormularioNotas1;
     private javax.swing.JPanel jpNota1;
     private javax.swing.JPanel jpNota2;

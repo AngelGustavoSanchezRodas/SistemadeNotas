@@ -87,6 +87,15 @@ public class VistaProfesor extends javax.swing.JFrame {
             modelo.addRow(fila);
         }
         }
+    
+    private void abrirFormularioNota(String nombreEstudiante) {
+        // De momento solo mostramos un mensaje temporal o abrimos una ventana vacía
+        JOptionPane.showMessageDialog(this, 
+            "Abrir formulario para: " + nombreEstudiante, 
+            "Editar Nota", 
+            JOptionPane.INFORMATION_MESSAGE);
+    }
+
 
 
 
@@ -292,7 +301,29 @@ public class VistaProfesor extends javax.swing.JFrame {
     }//GEN-LAST:event_jtCursosMouseClicked
 
     private void jtEstudiantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtEstudiantesMouseClicked
+       if (evt.getClickCount() == 2 && jtEstudiantes.getSelectedRow() != -1) {
+        int fila = jtEstudiantes.getSelectedRow();
+
+        // Obtener datos desde la tabla
+        int idEstudiante;
+        try {
+            idEstudiante = Integer.parseInt(jtEstudiantes.getValueAt(fila, 0).toString());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El ID del estudiante no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String nombre = jtEstudiantes.getValueAt(fila, 1).toString();
+        int idAsignatura = 1; // 🔹 Puedes cambiarlo si luego lo obtienes dinámicamente
+
+        // Abrir el formulario
+        FormularioNotas form = new FormularioNotas();
+        form.setDatosEstudiante(idEstudiante, idAsignatura, nombre);
+        form.setLocationRelativeTo(this); // Centrar el formulario
+        form.setVisible(true);
         
+        this.dispose(); // opcional: cierra la ventana actual
+    } 
     }//GEN-LAST:event_jtEstudiantesMouseClicked
 
     /**
