@@ -304,7 +304,23 @@ public class FormularioNotas extends javax.swing.JFrame {
     }//GEN-LAST:event_jbRegresarActionPerformed
 
     private void jbEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEnviarActionPerformed
-    try {
+    
+        String pinIngresado = JOptionPane.showInputDialog(this, "Ingrese su PIN de autorización:", "Confirmar envío", JOptionPane.PLAIN_MESSAGE);
+
+if (pinIngresado == null) {
+    // Si presiona "Cancelar", detenemos el proceso
+    return;
+}
+
+// Aquí podés validar el PIN real (puede venir de la BD o estar hardcodeado por ahora)
+String pinCorrecto = "1234"; // Ejemplo temporal, luego se puede obtener del catedrático
+
+if (!pinIngresado.equals(pinCorrecto)) {
+    JOptionPane.showMessageDialog(this, "PIN incorrecto. No se ha enviado la nota.", "Error", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+        
+        try {
     int notasLlenas = 0;
     String tipoNota = "";
     Double nota = null;
