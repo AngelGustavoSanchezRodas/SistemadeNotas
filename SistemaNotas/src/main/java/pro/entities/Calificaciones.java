@@ -48,7 +48,7 @@ public class Calificaciones implements Serializable {
     private Integer examen2;
     @Column(name = "examen_final")
     private Integer examenFinal;
-    @Column(name = "total")
+    @Column(name = "total", insertable = false, updatable = false)
     private Integer total;
     @Column(name = "fecha_registro")
     @Temporal(TemporalType.DATE)

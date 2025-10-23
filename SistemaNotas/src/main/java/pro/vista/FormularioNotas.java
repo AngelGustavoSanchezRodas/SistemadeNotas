@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package pro.vista;
 
 import java.awt.Color;
@@ -10,35 +6,58 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import pro.dao.CalificacionesDAO;
 import pro.entities.Calificaciones;
+import pro.vista.VistaProfesor;
 
-/**
- *
- * @author USER
- */
 public class FormularioNotas extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PrimerVista
-     */
-    public FormularioNotas() {
-        initComponents();
-    }
-   // Variables de clase
+    private int idCatedratico;
     private int idEstudiante;
     private int idAsignatura;
     private String nombreEstudiante;
 
-    // Método público para recibir los datos
+    public FormularioNotas() {
+    initComponents();
+    limpiarCamposTexto();
+    configurarVentana();
+    configurarEventosNA(); 
+    }
+
+    private void limpiarCamposTexto() {
+    jtfExamen1.setText("");
+    jtfExamen2.setText("");
+    jtfExamenFinal.setText("");
+    }
+    
+    private void configurarEventosNA() {
+    jcNA1.addActionListener(e -> jtfExamen1.setEnabled(!jcNA1.isSelected()));
+    jcNA2.addActionListener(e -> jtfExamen2.setEnabled(!jcNA2.isSelected()));
+    jcNA3.addActionListener(e -> jtfExamenFinal.setEnabled(!jcNA3.isSelected()));
+    }
+
+
+
+
+    // --- SETTERS ---
+    public void setIdCatedratico(int idCatedratico) {
+        this.idCatedratico = idCatedratico;
+    }
+
     public void setDatosEstudiante(int idEstudiante, int idAsignatura, String nombreEstudiante) {
         this.idEstudiante = idEstudiante;
         this.idAsignatura = idAsignatura;
         this.nombreEstudiante = nombreEstudiante;
 
-        // Actualiza el título o etiqueta del formulario
+        // Actualiza el título del formulario
         jlTitulo.setText("Ingresar notas para: " + nombreEstudiante);
     }
 
-
+    // --- Configuración de la ventana ---
+    private void configurarVentana() {
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.WHITE);
+        setFont(new Font("Segoe UI", Font.PLAIN, 14));
+    }
     
     private void jcNA1ActionPerformed(java.awt.event.ActionEvent evt) {                                     
         jtfExamen1.setEnabled(!jcNA1.isSelected());
@@ -53,14 +72,6 @@ public class FormularioNotas extends javax.swing.JFrame {
     }  
 
     
-     private void configurarVentana() {
-
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.WHITE); // fondo uniforme
-        setFont(new Font("Segoe UI", Font.PLAIN, 14));
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -122,7 +133,7 @@ public class FormularioNotas extends javax.swing.JFrame {
         jbExamen1.setText("Examen 1");
 
         jtfExamen1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jtfExamen1.setText("Nota ");
+        jtfExamen1.setPreferredSize(new java.awt.Dimension(60, 25));
         jtfExamen1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfExamen1ActionPerformed(evt);
@@ -162,7 +173,8 @@ public class FormularioNotas extends javax.swing.JFrame {
         jLabel1.setText("Examen 2");
 
         jtfExamen2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jtfExamen2.setText("Nota");
+        jtfExamen2.setMinimumSize(new java.awt.Dimension(60, 25));
+        jtfExamen2.setPreferredSize(new java.awt.Dimension(60, 25));
 
         javax.swing.GroupLayout jpNota2Layout = new javax.swing.GroupLayout(jpNota2);
         jpNota2.setLayout(jpNota2Layout);
@@ -197,7 +209,7 @@ public class FormularioNotas extends javax.swing.JFrame {
         jlExamenFinal.setText("Examen Final");
 
         jtfExamenFinal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jtfExamenFinal.setText("Nota");
+        jtfExamenFinal.setPreferredSize(new java.awt.Dimension(60, 25));
 
         javax.swing.GroupLayout jpNotaFinalLayout = new javax.swing.GroupLayout(jpNotaFinal);
         jpNotaFinal.setLayout(jpNotaFinalLayout);
@@ -206,7 +218,7 @@ public class FormularioNotas extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpNotaFinalLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jlExamenFinal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
                 .addComponent(jtfExamenFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(jcNA3)
@@ -280,87 +292,131 @@ public class FormularioNotas extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfExamen1ActionPerformed
 
     private void jbRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegresarActionPerformed
-       VistaProfesor vistaP = new VistaProfesor();
-       vistaP.setVisible(true);
-       this.dispose();
+    VistaProfesor vista = new VistaProfesor(this.idCatedratico);
+        vista.setVisible(true);
+
+        if (this.idAsignatura != 0) {
+            vista.cargarEstudiantesDelCurso(this.idAsignatura);
+        }
+
+        this.dispose();
+    
     }//GEN-LAST:event_jbRegresarActionPerformed
 
     private void jbEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEnviarActionPerformed
-      try {
-        int notasLlenas = 0;
-        String tipoNota = "";
-        double nota = 0;
+    try {
+    int notasLlenas = 0;
+    String tipoNota = "";
+    Double nota = null;
+    boolean inasistencia = false;
 
-        // --- Examen 1 ---
-        if (!jcNA1.isSelected() && !jtfExamen1.getText().trim().isEmpty()) {
-            notasLlenas++;
-            tipoNota = "Examen 1";
+    // --- Examen 1 ---
+    if (jcNA1.isSelected()) {
+        notasLlenas++;
+        tipoNota = "Examen 1";
+        inasistencia = true;
+        nota = 0.0;
+    } else if (!jtfExamen1.getText().trim().isEmpty()) {
+        notasLlenas++;
+        tipoNota = "Examen 1";
+        try {
             nota = Double.parseDouble(jtfExamen1.getText().trim());
-            if (nota < 0 || nota > 30) {
-                JOptionPane.showMessageDialog(this, " La nota del Examen 1 debe estar entre 0 y 30.");
-                return;
-            }
-        }
-
-        // --- Examen 2 ---
-        if (!jcNA2.isSelected() && !jtfExamen2.getText().trim().isEmpty()) {
-            notasLlenas++;
-            tipoNota = "Examen 2";
-            nota = Double.parseDouble(jtfExamen2.getText().trim());
-            if (nota < 0 || nota > 30) {
-                JOptionPane.showMessageDialog(this, " La nota del Examen 2 debe estar entre 0 y 30.");
-                return;
-            }
-        }
-
-        // --- Examen Final ---
-        if (!jcNA3.isSelected() && !jtfExamenFinal.getText().trim().isEmpty()) {
-            notasLlenas++;
-            tipoNota = "Examen Final";
-            nota = Double.parseDouble(jtfExamenFinal.getText().trim());
-            if (nota < 0 || nota > 40) {
-                JOptionPane.showMessageDialog(this, " La nota del Examen Final debe estar entre 0 y 40.");
-                return;
-            }
-        }
-
-        if (notasLlenas == 0) {
-            JOptionPane.showMessageDialog(this, " Debes ingresar una nota antes de enviar.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingresa un valor numérico válido para el Examen 1.");
             return;
         }
-
-        if (notasLlenas > 1) {
-            JOptionPane.showMessageDialog(this, "️ Solo puedes enviar UNA nota a la vez.");
+        if (nota < 0 || nota > 30) {
+            JOptionPane.showMessageDialog(this, "La nota del Examen 1 debe estar entre 0 y 30.");
             return;
         }
-
-        // --- Guardar en BD ---
-        CalificacionesDAO dao = new CalificacionesDAO();
-        Calificaciones cal = dao.buscarPorEstudianteYAsignatura(idEstudiante, idAsignatura);
-
-        if (cal == null) {
-            JOptionPane.showMessageDialog(this, " No se encontró registro de calificación para este estudiante.");
-            return;
-        }
-
-        switch (tipoNota) {
-            case "Examen 1" -> cal.setExamen1((int) nota);
-            case "Examen 2" -> cal.setExamen2((int) nota);
-            case "Examen Final" -> cal.setExamenFinal((int) nota);
-        }
-
-        dao.actualizar(cal);
-
-        JOptionPane.showMessageDialog(this, " Nota registrada con éxito para " + nombreEstudiante);
-        this.dispose(); // cerrar el formulario
-        new VistaProfesor().setVisible(true);
-
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, " Ingresa un valor numérico válido.");
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "️ Error al guardar la nota: " + e.getMessage());
-        e.printStackTrace();
     }
+
+    // --- Examen 2 ---
+    if (jcNA2.isSelected()) {
+        notasLlenas++;
+        tipoNota = "Examen 2";
+        inasistencia = true;
+        nota = 0.0;
+    } else if (!jtfExamen2.getText().trim().isEmpty()) {
+        notasLlenas++;
+        tipoNota = "Examen 2";
+        try {
+            nota = Double.parseDouble(jtfExamen2.getText().trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingresa un valor numérico válido para el Examen 2.");
+            return;
+        }
+        if (nota < 0 || nota > 30) {
+            JOptionPane.showMessageDialog(this, "La nota del Examen 2 debe estar entre 0 y 30.");
+            return;
+        }
+    }
+
+    // --- Examen Final ---
+    if (jcNA3.isSelected()) {
+        notasLlenas++;
+        tipoNota = "Examen Final";
+        inasistencia = true;
+        nota = 0.0;
+    } else if (!jtfExamenFinal.getText().trim().isEmpty()) {
+        notasLlenas++;
+        tipoNota = "Examen Final";
+        try {
+            nota = Double.parseDouble(jtfExamenFinal.getText().trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingresa un valor numérico válido para el Examen Final.");
+            return;
+        }
+        if (nota < 0 || nota > 40) {
+            JOptionPane.showMessageDialog(this, "La nota del Examen Final debe estar entre 0 y 40.");
+            return;
+        }
+    }
+
+    if (notasLlenas == 0) {
+        JOptionPane.showMessageDialog(this, "Debes ingresar una nota o marcar N.A. antes de enviar.");
+        return;
+    }
+
+    if (notasLlenas > 1) {
+        JOptionPane.showMessageDialog(this, "Solo puedes registrar una nota (o N.A.) a la vez.");
+        return;
+    }
+
+    // --- Guardar en BD ---
+    CalificacionesDAO dao = new CalificacionesDAO();
+    Calificaciones cal = dao.buscarPorEstudianteYAsignatura(idEstudiante, idAsignatura);
+
+    if (cal == null) {
+        JOptionPane.showMessageDialog(this, "No se encontró registro de calificación para este estudiante.");
+        return;
+    }
+
+    // --- Actualizar según tipo de nota ---
+    switch (tipoNota) {
+        case "Examen 1" -> cal.setExamen1(nota.intValue());
+        case "Examen 2" -> cal.setExamen2(nota.intValue());
+        case "Examen Final" -> cal.setExamenFinal(nota.intValue());
+    }
+
+    dao.actualizar(cal);
+    JOptionPane.showMessageDialog(this, "✅ Nota registrada con éxito para " + nombreEstudiante);
+
+    this.dispose();
+
+    VistaProfesor vista = new VistaProfesor(this.idCatedratico);
+    vista.setVisible(true);
+
+    if (this.idAsignatura != 0) {
+        vista.cargarEstudiantesDelCurso(this.idAsignatura);
+    }
+
+
+} catch (Exception e) {
+    JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar la nota: " + e.getMessage());
+    e.printStackTrace();
+}
+
     }//GEN-LAST:event_jbEnviarActionPerformed
 
     /**

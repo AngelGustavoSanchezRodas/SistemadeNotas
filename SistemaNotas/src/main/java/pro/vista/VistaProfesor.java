@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package pro.vista;
 
 import java.awt.Color;
@@ -13,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import pro.dao.AsignaturasDAO;
 import pro.dao.EstudiantesDAO;
 import pro.entities.Asignaturas;
+import pro.entities.Estudiantes;
 
 /**
  *
@@ -20,27 +18,25 @@ import pro.entities.Asignaturas;
  */
 public class VistaProfesor extends javax.swing.JFrame {
     
-    
-    
-
-    /**
-     * Creates new form VistaProfesor
-     */
     public VistaProfesor() {
         initComponents();
         configurarVentana();
-        
     }
     
     private int idCatedratico;
+    
+    private int idAsignaturaSeleccionada;
 
-    public VistaProfesor(int idCatedratico) {
-        initComponents();
-        configurarVentana();
-        this.idCatedratico = idCatedratico;
-        cargarCursosCatedratico(idCatedratico);
-        setVisible(true); // Mostrar ventana
-    }
+
+   public VistaProfesor(int idCatedratico) {
+    initComponents();
+    configurarVentana();
+    this.idCatedratico = idCatedratico;
+    cargarCursosCatedratico(idCatedratico);
+    setTitle("Panel del Profesor - ID: " + idCatedratico);
+    setVisible(true);
+}
+
     
      private void configurarVentana() {
         setLocationRelativeTo(null);
@@ -71,23 +67,49 @@ public class VistaProfesor extends javax.swing.JFrame {
         }).start();
     }
      
-    private void cargarEstudiantesDelCurso(int idAsignatura) {
-        EstudiantesDAO dao = new EstudiantesDAO();
-        List<Object[]> estudiantes = dao.obtenerEstudiantesPorCurso(idAsignatura);
+    public void cargarEstudiantesDelCurso(int idAsignatura) {
+    // Ejecutar en hilo de fondo si quieres (opcional), pero aquí uso directo:
+    EstudiantesDAO dao = new EstudiantesDAO();
+    List<Object[]> estudiantes = dao.obtenerEstudiantesPorCurso(idAsignatura);
 
-        DefaultTableModel modelo = (DefaultTableModel) jtEstudiantes.getModel();
-        modelo.setRowCount(0); // limpiar tabla
+    // Nuevo modelo con la columna ID como primera columna (vamos a ocultarla visualmente)
+    javax.swing.SwingUtilities.invokeLater(() -> {
+        DefaultTableModel modelo = new DefaultTableModel(
+            new Object[]{"ID", "Estudiante", "Examen 1", "Examen 2", "Examen Final"}, 0
+        ) {
+            // Evitar edición directa en la tabla
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
-        if (estudiantes == null || estudiantes.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No hay estudiantes inscritos en este curso.");
-            return;
+        if (estudiantes != null) {
+            for (Object[] fila : estudiantes) {
+                // fila[0] -> idEstudiante (Integer)
+                // fila[1] -> nombreUsuario (String)
+                // fila[2..4] -> examenes (Integer o null)
+                modelo.addRow(new Object[]{ fila[0], fila[1], fila[2], fila[3], fila[4] });
+            }
         }
 
-        for (Object[] fila : estudiantes) {
-            modelo.addRow(fila);
+        jtEstudiantes.setModel(modelo);
+
+        // OCULTAR columna ID visualmente (permanece en el modelo)
+        if (jtEstudiantes.getColumnModel().getColumnCount() > 0) {
+            jtEstudiantes.getColumnModel().getColumn(0).setMinWidth(0);
+            jtEstudiantes.getColumnModel().getColumn(0).setMaxWidth(0);
+            jtEstudiantes.getColumnModel().getColumn(0).setWidth(0);
+            jtEstudiantes.getColumnModel().getColumn(0).setPreferredWidth(0);
         }
-        }
+    });
     
+    jtEstudiantes.revalidate();
+    jtEstudiantes.repaint();    
+}
+
+
+      
     private void abrirFormularioNota(String nombreEstudiante) {
         // De momento solo mostramos un mensaje temporal o abrimos una ventana vacía
         JOptionPane.showMessageDialog(this, 
@@ -96,10 +118,6 @@ public class VistaProfesor extends javax.swing.JFrame {
             JOptionPane.INFORMATION_MESSAGE);
     }
 
-
-
-
-     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -295,35 +313,37 @@ public class VistaProfesor extends javax.swing.JFrame {
             return;
         }
 
-        // Cargar estudiantes del curso seleccionado
-        cargarEstudiantesDelCurso(cursoSeleccionado.getIdAsignatura());
+        //  Guardamos el ID del curso para usarlo luego
+        this.idAsignaturaSeleccionada = cursoSeleccionado.getIdAsignatura();
+
+        //  Cargamos los estudiantes de ese curso
+        cargarEstudiantesDelCurso(this.idAsignaturaSeleccionada);
     }
     }//GEN-LAST:event_jtCursosMouseClicked
 
     private void jtEstudiantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtEstudiantesMouseClicked
-       if (evt.getClickCount() == 2 && jtEstudiantes.getSelectedRow() != -1) {
+         if (evt.getClickCount() == 2 && jtEstudiantes.getSelectedRow() != -1) {
         int fila = jtEstudiantes.getSelectedRow();
 
-        // Obtener datos desde la tabla
-        int idEstudiante;
-        try {
-            idEstudiante = Integer.parseInt(jtEstudiantes.getValueAt(fila, 0).toString());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El ID del estudiante no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        int idEstudiante = Integer.parseInt(jtEstudiantes.getValueAt(fila, 0).toString());
+        String nombre = jtEstudiantes.getValueAt(fila, 1).toString();
+
+        // Usa el ID del curso que el profesor tiene seleccionado
+        int idAsignatura = this.idAsignaturaSeleccionada;
+
+        if (idAsignatura == 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un curso antes de abrir notas.");
             return;
         }
 
-        String nombre = jtEstudiantes.getValueAt(fila, 1).toString();
-        int idAsignatura = 1; // 🔹 Puedes cambiarlo si luego lo obtienes dinámicamente
-
-        // Abrir el formulario
+        // 🔹 Enviamos los datos al formulario de notas
         FormularioNotas form = new FormularioNotas();
         form.setDatosEstudiante(idEstudiante, idAsignatura, nombre);
-        form.setLocationRelativeTo(this); // Centrar el formulario
+        form.setIdCatedratico(this.idCatedratico); // 👈 importante
         form.setVisible(true);
-        
-        this.dispose(); // opcional: cierra la ventana actual
-    } 
+
+        this.dispose(); // Cierra la vista del profesor
+    }
     }//GEN-LAST:event_jtEstudiantesMouseClicked
 
     /**

@@ -8,8 +8,7 @@ import pro.entities.Asignaturas;
 import pro.entities.Estudiantes;
 
 /**
- * DAO optimizado para manejar estudiantes sin abrir múltiples sesiones.
- * Utiliza una sola EntityManagerFactory (JPAUtil).
+ * DAO para Estudiantes y consultas relacionadas.
  */
 public class EstudiantesDAO {
 
@@ -122,7 +121,9 @@ public class EstudiantesDAO {
     }
 
     /**
-     * 🔹 Retorna las asignaturas (cursos) inscritas por el estudiante.
+     * Retorna las asignaturas (entidades Asignaturas) en las que está inscrito un estudiante.
+     * Devuelve una lista de Asignaturas (puede contener duplicados si hay entradas múltiples,
+     * pero por diseño idealmente cada (estudiante,asignatura) es único en calificaciones).
      */
     public List<Asignaturas> obtenerCursosEstudiante(Integer idEstudiante) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -137,43 +138,50 @@ public class EstudiantesDAO {
             em.close();
         }
     }
-    
+
+    /**
+     * Retorna las notas (examen1, examen2, examenFinal) para un estudiante en una asignatura.
+     * Cada Object[] corresponde a {examen1, examen2, examenFinal} (Integer o null).
+     */
     public List<Object[]> obtenerNotasPorCurso(Integer idEstudiante, Integer idAsignatura) {
-    EntityManager em = JPAUtil.getEntityManager();
-    try {
-        TypedQuery<Object[]> query = em.createQuery(
-            "SELECT c.examen1, c.examen2, c.examenFinal " +
-            "FROM Calificaciones c " +
-            "WHERE c.idEstudiante.idEstudiante = :idEstudiante " +
-            "AND c.idAsignatura.idAsignatura = :idAsignatura",
-            Object[].class
-        );
-        query.setParameter("idEstudiante", idEstudiante);
-        query.setParameter("idAsignatura", idAsignatura);
-        return query.getResultList();
-    } finally {
-        em.close();
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            TypedQuery<Object[]> query = em.createQuery(
+                "SELECT c.examen1, c.examen2, c.examenFinal " +
+                "FROM Calificaciones c " +
+                "WHERE c.idEstudiante.idEstudiante = :idEstudiante " +
+                "AND c.idAsignatura.idAsignatura = :idAsignatura",
+                Object[].class
+            );
+            query.setParameter("idEstudiante", idEstudiante);
+            query.setParameter("idAsignatura", idAsignatura);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
     }
-    }
-    
+
+    /**
+     * Retorna la lista de estudiantes inscritos en una asignatura junto con sus notas.
+     * Cada Object[] devuelto contiene: { idEstudiante (Integer), nombreUsuario (String), examen1 (Integer|null), examen2 (Integer|null), examenFinal (Integer|null) }
+     *
+     * IMPORTANTE: en la entidad Usuarios el campo se llama `nombreUsuario` (no `nombre`), por eso se usa e.idUsuario.nombreUsuario.
+     */
     public List<Object[]> obtenerEstudiantesPorCurso(Integer idAsignatura) {
-    EntityManager em = JPAUtil.getEntityManager();
-    try {
-        TypedQuery<Object[]> query = em.createQuery(
-            "SELECT e.idUsuario.nombreUsuario, c.examen1, c.examen2, c.examenFinal " +
-            "FROM Calificaciones c " +
-            "JOIN c.idEstudiante e " +
-            "WHERE c.idAsignatura.idAsignatura = :idAsignatura",
-            Object[].class
-        );
-        query.setParameter("idAsignatura", idAsignatura);
-        return query.getResultList();
-    } finally {
-        em.close();
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            TypedQuery<Object[]> query = em.createQuery(
+                "SELECT e.idEstudiante, e.idUsuario.nombreUsuario, c.examen1, c.examen2, c.examenFinal " +
+                "FROM Calificaciones c " +
+                "JOIN c.idEstudiante e " +
+                "WHERE c.idAsignatura.idAsignatura = :idAsignatura",
+                Object[].class
+            );
+            query.setParameter("idAsignatura", idAsignatura);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
     }
-}
-
-
-    
 
 }
