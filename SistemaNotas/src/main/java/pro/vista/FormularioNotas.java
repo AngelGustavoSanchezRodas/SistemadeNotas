@@ -35,8 +35,6 @@ public class FormularioNotas extends javax.swing.JFrame {
     }
 
 
-
-
     // --- SETTERS ---
     public void setIdCatedratico(int idCatedratico) {
         this.idCatedratico = idCatedratico;
@@ -49,6 +47,13 @@ public class FormularioNotas extends javax.swing.JFrame {
 
         // Actualiza el título del formulario
         jlTitulo.setText("Ingresar notas para: " + nombreEstudiante);
+        
+    CalificacionesDAO dao = new CalificacionesDAO();
+    Calificaciones cal = dao.buscarPorEstudianteYAsignatura(idEstudiante, idAsignatura);
+    
+    jtfExamen1.setText(cal.getExamen1().toString());
+    jtfExamen2.setText(cal.getExamen2().toString());
+    jtfExamenFinal.setText(cal.getExamenFinal().toString());
     }
 
     // --- Configuración de la ventana ---
@@ -218,7 +223,7 @@ public class FormularioNotas extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpNotaFinalLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jlExamenFinal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
                 .addComponent(jtfExamenFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(jcNA3)
@@ -270,7 +275,7 @@ public class FormularioNotas extends javax.swing.JFrame {
                 .addGroup(jpFormularioNotas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbRegresar)
                     .addComponent(jbEnviar))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -320,10 +325,13 @@ if (!pinIngresado.equals(pinCorrecto)) {
     return;
 }
         
-        try {
+    try {
+        
     int notasLlenas = 0;
     String tipoNota = "";
-    Double nota = null;
+    Double nota1 = 0.00;
+    Double nota2 = 0.00;
+    Double nota3 = 0.00;
     boolean inasistencia = false;
 
     // --- Examen 1 ---
@@ -331,18 +339,18 @@ if (!pinIngresado.equals(pinCorrecto)) {
         notasLlenas++;
         tipoNota = "Examen 1";
         inasistencia = true;
-        nota = 0.0;
+        nota1 = 0.0;
     } else if (!jtfExamen1.getText().trim().isEmpty()) {
         notasLlenas++;
         tipoNota = "Examen 1";
         try {
-            nota = Double.parseDouble(jtfExamen1.getText().trim());
+            nota1 = Double.parseDouble(jtfExamen1.getText().trim());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingresa un valor numérico válido para el Examen 1.");
             return;
         }
-        if (nota < 0 || nota > 30) {
-            JOptionPane.showMessageDialog(this, "La nota del Examen 1 debe estar entre 0 y 30.");
+        if (nota1 < 0 || nota1 > 15) {
+            JOptionPane.showMessageDialog(this, "La nota del Examen 1 debe estar entre 0 y 15.");
             return;
         }
     }
@@ -352,18 +360,18 @@ if (!pinIngresado.equals(pinCorrecto)) {
         notasLlenas++;
         tipoNota = "Examen 2";
         inasistencia = true;
-        nota = 0.0;
+        nota2 = 0.0;
     } else if (!jtfExamen2.getText().trim().isEmpty()) {
         notasLlenas++;
         tipoNota = "Examen 2";
         try {
-            nota = Double.parseDouble(jtfExamen2.getText().trim());
+            nota2 = Double.parseDouble(jtfExamen2.getText().trim());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingresa un valor numérico válido para el Examen 2.");
             return;
         }
-        if (nota < 0 || nota > 30) {
-            JOptionPane.showMessageDialog(this, "La nota del Examen 2 debe estar entre 0 y 30.");
+        if (nota2 < 0 || nota2 > 15) {
+            JOptionPane.showMessageDialog(this, "La nota del Examen 2 debe estar entre 0 y 15.");
             return;
         }
     }
@@ -373,29 +381,37 @@ if (!pinIngresado.equals(pinCorrecto)) {
         notasLlenas++;
         tipoNota = "Examen Final";
         inasistencia = true;
-        nota = 0.0;
+        nota3 = 0.0;
     } else if (!jtfExamenFinal.getText().trim().isEmpty()) {
-        notasLlenas++;
         tipoNota = "Examen Final";
         try {
-            nota = Double.parseDouble(jtfExamenFinal.getText().trim());
+            nota3 = Double.parseDouble(jtfExamenFinal.getText().trim());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingresa un valor numérico válido para el Examen Final.");
             return;
         }
-        if (nota < 0 || nota > 40) {
-            JOptionPane.showMessageDialog(this, "La nota del Examen Final debe estar entre 0 y 40.");
+        
+        Double ex1 = Double.parseDouble(jtfExamen1.getText());
+        Double ex2 = Double.parseDouble(jtfExamen2.getText());
+        
+        int minZone = 26;
+        
+        if((ex1 + ex2) < minZone) {
+            JOptionPane.showMessageDialog(this, "El estudiante no llego a zona minima. No tiene derecho a examen final.");
+            inasistencia = true;
+            nota3 = 0.0;
+        }
+        
+        if (nota3 < 0 || nota3 > 35) {
+            JOptionPane.showMessageDialog(this, "La nota del Examen Final debe estar entre 0 y 35.");
             return;
         }
+        
+        notasLlenas++;
+        
     }
-
     if (notasLlenas == 0) {
         JOptionPane.showMessageDialog(this, "Debes ingresar una nota o marcar N.A. antes de enviar.");
-        return;
-    }
-
-    if (notasLlenas > 1) {
-        JOptionPane.showMessageDialog(this, "Solo puedes registrar una nota (o N.A.) a la vez.");
         return;
     }
 
@@ -408,15 +424,12 @@ if (!pinIngresado.equals(pinCorrecto)) {
         return;
     }
 
-    // --- Actualizar según tipo de nota ---
-    switch (tipoNota) {
-        case "Examen 1" -> cal.setExamen1(nota.intValue());
-        case "Examen 2" -> cal.setExamen2(nota.intValue());
-        case "Examen Final" -> cal.setExamenFinal(nota.intValue());
-    }
+    cal.setExamen1(nota1.intValue());
+    cal.setExamen2(nota2.intValue());
+    cal.setExamenFinal(nota3.intValue());
 
     dao.actualizar(cal);
-    JOptionPane.showMessageDialog(this, "✅ Nota registrada con éxito para " + nombreEstudiante);
+    JOptionPane.showMessageDialog(this, "✅ Notas registradas con éxito para " + nombreEstudiante);
 
     this.dispose();
 
