@@ -440,9 +440,17 @@ if (!pinIngresado.equals(pinCorrecto)) {
         return;
     }
 
-    cal.setExamen1(nota1.intValue());
-    cal.setExamen2(nota2.intValue());
-    cal.setExamenFinal(nota3.intValue());
+    if(!nota1.isNaN()) {
+      cal.setExamen1(nota1.intValue());  
+    }
+    
+    if(!nota2.isNaN()) {
+      cal.setExamen2(nota2.intValue());  
+    }
+    
+    if(!nota3.isNaN()) {
+      cal.setExamenFinal(nota3.intValue());  
+    }
 
     dao.actualizar(cal);
     JOptionPane.showMessageDialog(this, "✅ Notas registradas con éxito para " + nombreEstudiante);
