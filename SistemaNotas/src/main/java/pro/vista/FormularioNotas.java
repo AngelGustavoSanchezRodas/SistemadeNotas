@@ -50,18 +50,22 @@ public class FormularioNotas extends javax.swing.JFrame {
         
         CalificacionesDAO dao = new CalificacionesDAO();
         Calificaciones cal = dao.buscarPorEstudianteYAsignatura(idEstudiante, idAsignatura);
+        
+        boolean nota1 = cal.getExamen1() != null;
+        boolean nota2 = cal.getExamen2() != null;
+        boolean nota3 = cal.getExamenFinal() != null;
 
-        if(cal.getExamen1() > 0) {
+        if(nota1) {
             jtfExamen1.setText(cal.getExamen1().toString());
             jtfExamen1.setEnabled(false);
         }
 
-        if(cal.getExamen2() > 0) {
+        if(nota2) {
             jtfExamen2.setText(cal.getExamen2().toString());
             jtfExamen2.setEnabled(false);
         }
 
-        if(cal.getExamenFinal() > 0) {
+        if(nota3) {
             jtfExamenFinal.setText(cal.getExamenFinal().toString());
             jtfExamenFinal.setEnabled(false);
         }
