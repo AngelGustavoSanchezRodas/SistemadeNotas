@@ -440,15 +440,15 @@ if (!pinIngresado.equals(pinCorrecto)) {
         return;
     }
 
-    if(!nota1.isNaN()) {
+    if(nota1 != null) {
       cal.setExamen1(nota1.intValue());  
     }
     
-    if(!nota2.isNaN()) {
+    if(nota2 != null) {
       cal.setExamen2(nota2.intValue());  
     }
     
-    if(!nota3.isNaN()) {
+    if(nota3 != null) {
       cal.setExamenFinal(nota3.intValue());  
     }
 
