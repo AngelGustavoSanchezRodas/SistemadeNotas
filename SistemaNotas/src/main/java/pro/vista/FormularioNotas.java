@@ -345,9 +345,9 @@ if (!pinIngresado.equals(pinCorrecto)) {
         
     int notasLlenas = 0;
     String tipoNota = "";
-    Double nota1 = 0.00;
-    Double nota2 = 0.00;
-    Double nota3 = 0.00;
+    Double nota1 = null;
+    Double nota2 = null;
+    Double nota3 = null;
     boolean inasistencia = false;
 
     // --- Examen 1 ---
