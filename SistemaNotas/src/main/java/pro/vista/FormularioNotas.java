@@ -48,12 +48,24 @@ public class FormularioNotas extends javax.swing.JFrame {
         // Actualiza el título del formulario
         jlTitulo.setText("Ingresar notas para: " + nombreEstudiante);
         
-    CalificacionesDAO dao = new CalificacionesDAO();
-    Calificaciones cal = dao.buscarPorEstudianteYAsignatura(idEstudiante, idAsignatura);
-    
-    jtfExamen1.setText(cal.getExamen1().toString());
-    jtfExamen2.setText(cal.getExamen2().toString());
-    jtfExamenFinal.setText(cal.getExamenFinal().toString());
+        CalificacionesDAO dao = new CalificacionesDAO();
+        Calificaciones cal = dao.buscarPorEstudianteYAsignatura(idEstudiante, idAsignatura);
+
+        if(cal.getExamen1() > 0) {
+            jtfExamen1.setText(cal.getExamen1().toString());
+            jtfExamen1.setEnabled(false);
+        }
+
+        if(cal.getExamen2() > 0) {
+            jtfExamen2.setText(cal.getExamen2().toString());
+            jtfExamen2.setEnabled(false);
+        }
+
+        if(cal.getExamenFinal() > 0) {
+            jtfExamenFinal.setText(cal.getExamenFinal().toString());
+            jtfExamenFinal.setEnabled(false);
+        }
+
     }
 
     // --- Configuración de la ventana ---
